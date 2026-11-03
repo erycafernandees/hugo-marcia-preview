@@ -20,7 +20,20 @@
     @media(max-width:1150px){.shell{grid-template-columns:210px minmax(0,1fr)}.sidebar{padding:23px 12px}.grid-two{grid-template-columns:1fr}.seating-layout{grid-template-columns:1fr}.unassigned-list{grid-template-columns:repeat(2,1fr)}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:760px){.shell{display:block}.sidebar{position:static;display:none;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px 20px}.sidebar.open{display:flex}.sidebar .brand{display:none}.sidebar-bottom{display:none}.nav-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.side-caption{display:none}.nav-btn{font-size:11px}.topbar{min-height:68px;padding:12px 18px}.mobile-menu{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:white;font-size:21px}.topbar p{display:none}.topbar strong{font-size:12px}.top-actions{gap:8px}.avatar{width:32px;height:32px}.content{padding:26px 16px}.page-heading{display:block}.page-heading .actions{margin-top:20px}.kpis{gap:9px}.kpi{padding:17px;min-height:118px}.kpi-number{font-size:32px}.panel{padding:18px}.progress-row{grid-template-columns:86px minmax(0,1fr) 29px;gap:7px}.table-grid{grid-template-columns:1fr}.unassigned-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:1}.modal{padding:20px}.rsvp-spacer{display:none}}
     @media(max-width:390px){.preview-pill{display:none}.kpi{padding:14px}.kpi-label{font-size:10px}.kpi-caption{font-size:9px}.nav-btn{padding:10px}.page-heading h1{font-size:32px}}
-  </style>
+  
+/* Tipografia uniforme aprovada: DM Sans Regular 400 em todos os títulos;
+   Montserrat mantém-se nos textos, formulários, botões e menus.
+   A assinatura caligráfica Hugo e Márcia e o monograma H | M não são alterados. */
+h1,h2,h3,h4,h5,h6,
+.rsvp-person #greeting,
+.page-heading h1,.panel-title h2,.detail-heading h3,.table-head h3,.unassigned-panel h3,.modal h2 {
+  font-family:'DM Sans',Arial,sans-serif!important;
+  font-weight:400!important;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="shell">
