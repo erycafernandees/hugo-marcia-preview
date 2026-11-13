@@ -100,7 +100,7 @@ input::placeholder,textarea::placeholder{color:#888}
 .selected-children{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .selected-children button{background:var(--sage)!important;color:#fff!important;border:1px solid var(--sage)!important;border-radius:99px!important;padding:8px 14px!important;font-size:12px!important;width:auto!important;min-height:auto!important;letter-spacing:0!important;text-transform:none!important;margin:0!important}
 .rsvp-disclaimer{max-width:610px;margin:22px auto 0;color:#8b8b8b;text-align:center;font-size:11px;line-height:1.7}
-.footer{font-size:11px;letter-spacing:.12em;color:#777;text-align:center;border-top:1px solid #eee;padding:28px 20px 40px}
+.footer{font-size:11px;letter-spacing:.12em;color:#777;text-align:center;border-top:1px solid #eee;padding:28px 20px 40px}.footer-admin{color:#60764f;text-underline-offset:4px;font-size:10px}.footer-admin-divider{margin:0 8px;color:#bbb}
 .sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 /* Intro envelope: preserved independently of the website visual redesign */
 .overlay{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#fff;transition:opacity 1s,visibility 1s;overflow:hidden}
@@ -122,7 +122,10 @@ input::placeholder,textarea::placeholder{color:#888}
 .opening-screen.is-opening .env-flap{transform:rotateX(180deg);z-index:0}
 .opening-screen.is-opening .invite-card{transform:translateY(-48%);z-index:6}
 .opening-screen.is-opening .open-action{display:none}
-.opening-screen.is-opening .skip-action{display:block}
+.opening-screen.is-opening .skip-action{display:none}
+.opening-screen.is-revealed .skip-action{display:block}
+.opening-screen.is-revealed .invite-card{transform:translateY(-25%) scale(1.1);z-index:10;box-shadow:0 18px 42px #493b2d30;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.opening-screen.is-revealed .env-back,.opening-screen.is-revealed .env-front,.opening-screen.is-revealed .env-flap{opacity:.10;transition:opacity .9s ease}
 @media(max-width:740px){
  .header-shell{width:calc(100% - 28px);min-height:67px;gap:12px}
  .brand{font-size:24px}
@@ -279,9 +282,9 @@ h1,h2,h3,h4,h5,h6,
 </div>
 </section>
 </main>
-<footer class="footer">Hugo e Márcia · 21.05.2027</footer>
+<footer class="footer">Hugo e Márcia · 21.05.2027 <span class="footer-admin-divider">·</span> <a class="footer-admin" href="./admin-demo.html" aria-label="Pré-visualização da administração dos noivos">Área dos noivos (demonstração)</a></footer>
 <script>
-(()=>{const screen=document.getElementById('openingScreen'),stage=document.getElementById('envelopeStage'),open=document.getElementById('openAction'),skip=document.getElementById('skipAction'),overlay=document.getElementById('overlay');let started=false,finishTimer;function finish(){clearTimeout(finishTimer);overlay.classList.add('exit');document.body.classList.add('site-ready');setTimeout(()=>overlay.remove(),1200)}function start(){if(started)return;started=true;screen.classList.add('is-opening');stage.setAttribute('aria-label','Convite a abrir');finishTimer=setTimeout(finish,6500)}stage.addEventListener('click',start);stage.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();start()}});open.addEventListener('click',start);skip.addEventListener('click',finish);const count=document.getElementById('count');if(count){function update(){const days=Math.ceil((new Date('2027-05-21T12:00:00+01:00')-new Date())/86400000);count.textContent=days>0?'FALTAM '+days+' DIAS':'O NOSSO DIA CHEGOU'}update();setInterval(update,60000)}})();
+(()=>{const screen=document.getElementById('openingScreen'),stage=document.getElementById('envelopeStage'),open=document.getElementById('openAction'),skip=document.getElementById('skipAction'),overlay=document.getElementById('overlay');let started=false,finishTimer,revealTimer;function finish(){clearTimeout(finishTimer);clearTimeout(revealTimer);overlay.classList.add('exit');document.body.classList.add('site-ready');setTimeout(()=>overlay.remove(),1200)}function start(){if(started)return;started=true;screen.classList.add('is-opening');stage.setAttribute('aria-label','Convite a abrir');revealTimer=setTimeout(()=>screen.classList.add('is-revealed'),2600);finishTimer=setTimeout(finish,10000)}stage.addEventListener('click',start);stage.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();start()}});open.addEventListener('click',start);skip.addEventListener('click',finish);const count=document.getElementById('count');if(count){function update(){const days=Math.ceil((new Date('2027-05-21T12:00:00+01:00')-new Date())/86400000);count.textContent=days>0?'FALTAM '+days+' DIAS':'O NOSSO DIA CHEGOU'}update();setInterval(update,60000)}})();
 </script>
 <script>(()=>{const date=new Date('2027-05-21T12:00:00+01:00');const tick=()=>{const n=Math.max(0,date-Date.now()),d=Math.floor(n/86400000),h=Math.floor(n/3600000)%24,m=Math.floor(n/60000)%60,sec=Math.floor(n/1000)%60;for(const [id,v] of [['days',d],['hours',h],['minutes',m],['seconds',sec]]){const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0')}};tick();setInterval(tick,1000);const attendance=document.getElementById('attendance'),diet=document.getElementById('dietary-fields'),form=document.getElementById('rsvp-demo');attendance?.addEventListener('change',()=>{diet.hidden=attendance.value!=='yes'});form?.addEventListener('submit',e=>{e.preventDefault();document.getElementById('demo-feedback').textContent='Esta é uma pré-visualização. A tua resposta ainda não foi enviada nem guardada.'})})();</script>
 <script>
