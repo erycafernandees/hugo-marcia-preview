@@ -97,6 +97,42 @@ button.seat-map-core:hover{background:#f3f7ee;border-color:#71825f}
 .seat-bubble--empty:not(:disabled){background:#eaf0e6;border-color:#879e7c;color:#58724d}
 .seat-map-names button{color:#383d37}
 .seat-map-names button:hover{color:#60764f}
+
+/* Identidade Hugo & Márcia: painel privado, branco/preto/sálvia/bordô */
+:root{--white:#fff;--ink:#191919;--secondary:#616361;--faint:#959995;--sage:#60764f;--sage-deep:#485d40;--sage-light:#f0f4ed;--line:#e6e6e2;--surface:#fafaf9;--wine:#783348;--wine-soft:#f9f4f5;--gold:#a09284}
+body{background:#fff;color:#191919}
+.sidebar{background:#fff;border-right-color:#e8e8e6}
+.brand-symbol span{color:var(--wine)}
+.brand-text{color:#575f56}
+.side-caption{color:var(--wine);font-weight:600}
+.nav-btn.active{background:#f2f5ef;color:var(--sage-deep)}
+.nav-btn:hover{color:var(--wine)}
+.page-heading h1,.panel-title h2,.detail-heading h3,.table-head h3,.unassigned-panel h3,.modal h2{font-family:'DM Sans',Arial,sans-serif!important;font-weight:400!important}
+.eyebrow{color:var(--wine)}
+.topbar{background:#fff;border-bottom-color:#ededed}
+.preview-pill{color:var(--wine);border-color:#e3cad2;background:var(--wine-soft)}
+.kpi,.panel,.unassigned-panel{border-color:#e8e8e4;background:#fff}
+.kpi-number{color:#151515}
+.btn-primary{background:var(--sage);border-color:var(--sage);color:white}
+.btn-primary:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
+.btn:not(.btn-primary):hover{color:var(--wine);border-color:#d9bdc4;background:var(--wine-soft)}
+.status.yes{background:#edf4e9;color:#47683f}
+.status.pending{background:#f9f4f5;color:var(--wine)}
+.table-overline{color:var(--wine)!important}
+.seat-legend-dot.sage{background:var(--sage)}
+.seat-legend-dot.gray{background:var(--wine)}
+.seat-legend-dot.gold{background:#a09284}
+.seat-map-mode .table-card{background:#fff;border-color:#e8e7e3}
+.seat-map-core{border-color:#b9aba2;background:#fff;color:#191919}
+.seat-map-core small{color:#727272}
+.seat-view-switch button.active{background:var(--sage)}
+.seat-bubble.selected{box-shadow:0 0 0 3px #78334833,0 5px 14px #4d2b362a}
+.table-edit-btn{border-color:#c8d2c3;color:var(--sage-deep)}
+.table-edit-btn:hover{border-color:var(--wine);color:var(--wine)}
+.unassigned-avatar{border:1.5px solid #fff}
+.modal{border:1px solid #eae8e4}
+.toast{background:#202020}
+
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -257,10 +293,9 @@ function seatInitials(name){
  return (parts.length>1?parts[0][0]+parts[parts.length-1][0]:(parts[0]||"?").slice(0,2)).toLocaleUpperCase("pt-PT");
 }
 function seatColor(person){
- // Paleta editorial do convite: verde-sálvia, cinza quente e champanhe.
- // As cores distinguem o lado da família e as crianças, sem arco-íris.
- if(children.some(child=>child.id===person.id))return "#A39278";
- return person.side==="Hugo"?"#60764F":person.side==="Márcia"?"#777F75":"#60764F";
+ // Hugo em sálvia, Márcia em bordô e crianças em taupe suave.
+ if(children.some(child=>child.id===person.id))return "#A09284";
+ return person.side==="Hugo"?"#60764F":person.side==="Márcia"?"#783348":"#60764F";
 }
 function renderSeating(){
  const grid=document.getElementById("tableGrid"),unassigned=document.getElementById("unassignedList"),status=document.getElementById("seatSelection");
