@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#4B0000">
   <title>Hugo e Márcia | Administração — Demonstração</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,8 +98,8 @@ button.seat-map-core:hover{background:#f3f7ee;border-color:#71825f}
 .seat-map-names button{color:#383d37}
 .seat-map-names button:hover{color:#60764f}
 
-/* Identidade Hugo & Márcia: painel privado, branco/preto/sálvia/bordô */
-:root{--white:#fff;--ink:#191919;--secondary:#616361;--faint:#959995;--sage:#60764f;--sage-deep:#485d40;--sage-light:#f0f4ed;--line:#e6e6e2;--surface:#fafaf9;--wine:#783348;--wine-soft:#f9f4f5;--gold:#a09284}
+/* Identidade Hugo & Márcia: painel de demonstração, branco/preto/sálvia/bordô */
+:root{--white:#fff;--ink:#191919;--secondary:#616361;--faint:#959995;--sage:#60764f;--sage-deep:#485d40;--sage-light:#f0f4ed;--line:#e6e6e2;--surface:#fafaf9;--wine:#4B0000;--wine-soft:#f9f4f5;--gold:#a09284}
 body{background:#fff;color:#191919}
 .sidebar{background:#fff;border-right-color:#e8e8e6}
 .brand-symbol span{color:var(--wine)}
@@ -126,7 +126,7 @@ body{background:#fff;color:#191919}
 .seat-map-core{border-color:#b9aba2;background:#fff;color:#191919}
 .seat-map-core small{color:#727272}
 .seat-view-switch button.active{background:var(--sage)}
-.seat-bubble.selected{box-shadow:0 0 0 3px #78334833,0 5px 14px #4d2b362a}
+.seat-bubble.selected{box-shadow:0 0 0 3px #4B000033,0 5px 14px #4d2b362a}
 .table-edit-btn{border-color:#c8d2c3;color:var(--sage-deep)}
 .table-edit-btn:hover{border-color:var(--wine);color:var(--wine)}
 .unassigned-avatar{border:1.5px solid #fff}
@@ -134,8 +134,18 @@ body{background:#fff;color:#191919}
 .toast{background:#202020}
 
 .actions label.btn{cursor:pointer}
-.actions label.btn:hover{background:#f7f4f4;border-color:#783348;color:#783348}
+.actions label.btn:hover{background:#f7f4f4;border-color:#4B0000;color:#4B0000}
 @media(max-width:740px){.actions{gap:6px}.actions .btn{font-size:10px;padding:10px 11px;min-height:41px}}
+
+/* Paleta oficial do casamento: bordô exato #4B0000, verde-sálvia #60764F */
+:root{--wine:#4B0000;--wine-soft:#faf7f6;--sage:#4B0000;--sage-deep:#350000;--sage-light:#f9f5f4}
+.page-heading .eyebrow,.brand-symbol span,.table-overline{color:#60764F!important}
+.nav-btn.active{background:#f8f3f2;color:#4B0000}
+.btn-primary,.seat-view-switch button.active{background:#4B0000!important;border-color:#4B0000!important;color:#fff!important}
+.btn-primary:hover{background:#350000!important;border-color:#350000!important}
+.seat-legend-dot.sage{background:#4B0000}.seat-legend-dot.gray{background:#60764F}
+.table-edit-btn{color:#4B0000;border-color:#4B000044}
+.table-edit-btn:hover{color:#350000;border-color:#4B0000}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -360,7 +370,7 @@ function seatInitials(name){
 function seatColor(person){
  // Hugo em sálvia, Márcia em bordô e crianças em taupe suave.
  if(children.some(child=>child.id===person.id))return "#A09284";
- return person.side==="Hugo"?"#60764F":person.side==="Márcia"?"#783348":"#60764F";
+ return person.side==="Hugo"?"#60764F":person.side==="Márcia"?"#4B0000":"#60764F";
 }
 function renderSeating(){
  const grid=document.getElementById("tableGrid"),unassigned=document.getElementById("unassignedList"),status=document.getElementById("seatSelection");
