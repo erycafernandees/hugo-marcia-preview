@@ -173,6 +173,7 @@ body{background:#fff;color:#191919}
 
 /* Cor oficial final: borgonha profundo #4B0000 + verde-sálvia #60764F. */
 :root{--wedding-burgundy:#4B0000;--wedding-sage:#60764F}
+.hm-auth-hint{font-size:11px;color:#777;margin:15px 0 0}.hm-auth-card .btn-primary{background:#4B0000!important;border-color:#4B0000!important}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -186,14 +187,11 @@ body{background:#fff;color:#191919}
   <h1>Área dos noivos</h1>
   <p class="hm-auth-intro">Um espaço reservado para gerir o casamento.</p>
   <form id="authForm">
-   <label for="hmEmail">Email</label><input id="hmEmail" type="email" autocomplete="username" required placeholder="Email de acesso">
+   <label for="hmEmail">Utilizador</label><input id="hmEmail" type="text" autocapitalize="none" autocomplete="username" spellcheck="false" required placeholder="hugoemarcia">
    <label for="hmPassword">Palavra-passe</label><input id="hmPassword" type="password" minlength="8" autocomplete="current-password" required placeholder="Palavra-passe">
    <button type="submit" class="btn btn-primary">Entrar</button>
   </form>
-  <button id="createAccount" type="button" class="hm-create-account">Criar conta de noivo</button>
-  <div id="claimPanel" hidden><p>Para ativar esta conta, usa o código privado recebido dos noivos.</p>
-   <form id="claimForm"><label for="claimCode">Código privado de ativação</label><input id="claimCode" required autocomplete="off" placeholder="Código de ativação"><button class="btn btn-primary" type="submit">Ativar acesso</button></form>
-  </div>
+  <p class="hm-auth-hint">Entrada exclusiva para os noivos.</p>
   <p id="authStatus" aria-live="polite" role="status"></p>
   <a class="hm-back-link" href="./">Voltar ao convite</a>
  </div>
@@ -389,7 +387,7 @@ async function hmCheckAccess(){
   const uid=remoteSession.user?.id;
   if(!uid)throw Error('Sessão sem utilizador');
   const admins=await hmApi('hm_admins?select=user_id&user_id=eq.'+encodeURIComponent(uid));
-  if(!admins?.length){document.getElementById('claimPanel').hidden=false;hmMessage('Conta autenticada. Introduz o código privado para ativar o acesso.');return}
+  if(!admins?.length){hmMessage('Esta conta ainda não tem acesso administrativo autorizado.');return}
   await hmLoadData(true);hmMessage('');
  }catch(err){hmMessage(err.message||'Não foi possível verificar o acesso.')}
 }
@@ -428,28 +426,11 @@ function hmInitLogin(){
  const form=document.getElementById('authForm');
  form.onsubmit=async e=>{
   e.preventDefault();hmMessage('A iniciar sessão…');
-  const email=document.getElementById('hmEmail').value.trim(),password=document.getElementById('hmPassword').value;
+  const username=document.getElementById('hmEmail').value.trim().toLowerCase(),password=document.getElementById('hmPassword').value;
+  if(username!=='hugoemarcia'){hmMessage('Utilizador ou palavra-passe incorretos.');return}
+  const email='hugoemarcia@acesso.hugo-marcia.test';
   try{remoteSession=await hmAuthFetch('/token?grant_type=password',{email,password});sessionStorage.setItem('hm-wedding-session',JSON.stringify(remoteSession));await hmCheckAccess()}
-  catch(err){hmMessage('Não foi possível entrar. Confirma o email, a palavra-passe e se já verificaste o email de registo.')}
- };
- document.getElementById('createAccount').onclick=async()=>{
-  const email=document.getElementById('hmEmail').value.trim(),password=document.getElementById('hmPassword').value;
-  if(!email||password.length<8){hmMessage('Indica o teu email e uma palavra-passe com pelo menos 8 caracteres.');return}
-  hmMessage('A criar conta…');
-  try{
-   const data=await hmAuthFetch('/signup',{email,password});
-   if(data.access_token){remoteSession=data;sessionStorage.setItem('hm-wedding-session',JSON.stringify(data));await hmCheckAccess()}
-   else hmMessage('Conta criada. Verifica o email de confirmação recebido e depois inicia sessão.');
-  }catch(err){hmMessage('Não foi possível criar a conta. Verifica os dados ou inicia sessão.')}
- };
- document.getElementById('claimForm').onsubmit=async e=>{
-  e.preventDefault();hmMessage('A ativar acesso…');
-  const code=document.getElementById('claimCode').value.trim();
-  try{
-   const ok=await hmApi('rpc/hm_claim_admin',{method:'POST',body:{p_code:code}});
-   if(ok!==true)throw Error('Não autorizado');
-   document.getElementById('claimPanel').hidden=true;await hmLoadData(true);hmMessage('');
-  }catch(err){hmMessage('Código inválido ou limite de duas contas atingido.')}
+  catch(err){hmMessage('Não foi possível iniciar sessão. Confirma o utilizador e a palavra-passe.')}
  };
  document.getElementById('logoutBtn').onclick=async()=>{
   try{await fetch(HM_BASE+'/auth/v1/logout',{method:'POST',headers:{apikey:HM_KEY,Authorization:'Bearer '+remoteSession.access_token}})}catch{}
