@@ -428,7 +428,7 @@ function showChoice(e){
  panel.dataset.side=e.side;
  panel.dataset.allowed=e.kind==='familia'?'yes':'no';
  panel.hidden=e.kind!=='familia';
- document.querySelectorAll('input[name="attendance-choice"]').forEach(r=>r.dispatchEvent(new Event('change',{bubbles:true})));
+ if(yes)yes.dispatchEvent(new Event('change',{bubbles:true}));
 }
 input.addEventListener('input',()=>{
  reset();clearTimeout(timer);suggestions.replaceChildren();
