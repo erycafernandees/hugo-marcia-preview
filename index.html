@@ -263,7 +263,7 @@ input[type=radio],input[type=checkbox]{accent-color:#783348}
 #demo-feedback.rsvp-success{background:#f1f5ee;color:#405c3e;border:1px solid #bbd0b5;padding:15px;border-radius:9px}
 .rsvp-disclaimer{font-size:11px;max-width:500px;margin:23px auto 0}
 @media(max-width:680px){.rsvp-section{padding:60px 14px 80px}.rsvp-card{padding:34px 22px 38px}.rsvp-card h2{font-size:clamp(27px,7vw,37px)}.rsvp-instruction{margin-bottom:32px}}
-</style>
+.private-nav-link{color:#60764f!important;font-size:9px!important;letter-spacing:.1em!important}@media(max-width:640px){.private-nav-link{display:none!important}}</style>
 <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap" rel="stylesheet">
@@ -272,7 +272,7 @@ input[type=radio],input[type=checkbox]{accent-color:#783348}
 <header class="site-header" id="topo">
 <div class="header-shell">
 <a aria-label="Hugo e Márcia — início" class="brand" href="#inicio">H <span>|</span> M</a>
-<nav aria-label="Navegação principal" class="site-links"><a href="#dia">O NOSSO DIA</a></nav>
+<nav aria-label="Navegação principal" class="site-links"><a href="#dia">O NOSSO DIA</a><a class="private-nav-link" href="./admin.html" aria-label="Área privada dos noivos">ÁREA DOS NOIVOS</a></nav>
 <a class="header-rsvp" href="#rsvp">RSVP</a>
 </div>
 </header>
@@ -375,7 +375,7 @@ input[type=radio],input[type=checkbox]{accent-color:#783348}
 </div>
 </section>
 </main>
-<footer class="footer">Hugo e Márcia · 21.05.2027 <span class="footer-admin-divider">·</span> <a class="footer-admin" href="./admin-demo.html" aria-label="Pré-visualização da administração dos noivos">Área dos noivos (demonstração)</a></footer>
+<footer class="footer">Hugo e Márcia · 21.05.2027 <span class="footer-admin-divider">·</span> <a class="footer-admin" href="./admin.html" aria-label="Entrar na área privada dos noivos">Área privada dos noivos</a></footer>
 
 <script>(()=>{const date=new Date('2027-05-21T12:00:00+01:00');const tick=()=>{const n=Math.max(0,date-Date.now()),d=Math.floor(n/86400000),h=Math.floor(n/3600000)%24,m=Math.floor(n/60000)%60,sec=Math.floor(n/1000)%60;for(const [id,v] of [['days',d],['hours',h],['minutes',m],['seconds',sec]]){const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0')}};tick();setInterval(tick,1000)})();</script>
 
