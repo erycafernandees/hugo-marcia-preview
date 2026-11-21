@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>Hugo e Márcia | Administração — Demonstração</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--white:#fff;--ink:#21231f;--secondary:#696e66;--faint:#999d96;--sage:#5f7753;--sage-deep:#42583a;--sage-light:#f0f4ed;--line:#e6e9e2;--surface:#f9faf8;--gold:#ac9576;--radius:18px;--shadow:0 14px 38px rgba(30,36,26,.045)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--white);color:var(--ink);font-family:Montserrat,Arial,sans-serif;font-size:13px;line-height:1.6;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #9db392;outline-offset:3px}[hidden]{display:none!important}
+    .shell{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);padding:30px 19px 22px;display:flex;flex-direction:column;background:white;z-index:3}.brand{text-decoration:none;display:flex;align-items:center;gap:13px;padding:4px 12px 28px;border-bottom:1px solid var(--line)}.brand-symbol{font-family:Georgia,'Times New Roman',serif;font-size:25px;letter-spacing:.13em;white-space:nowrap;font-weight:400}.brand-symbol span{color:var(--gold);padding:0 3px}.brand-text{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--secondary);line-height:1.7;font-weight:600}.side-caption{color:#969c91;font-size:10px;text-transform:uppercase;letter-spacing:.2em;font-weight:700;margin:30px 12px 13px}.nav-list{display:grid;gap:5px}.nav-btn{border:0;background:transparent;display:flex;gap:13px;align-items:center;text-align:left;padding:13px 14px;border-radius:11px;color:#676e64;font-weight:600;width:100%}.nav-btn:hover,.nav-btn.active{background:var(--sage-light);color:var(--sage-deep)}.nav-btn svg{width:19px;height:19px;stroke-width:1.7;flex-shrink:0}.sidebar-bottom{margin-top:auto;border-top:1px solid var(--line);padding:19px 12px 0}.sidebar-bottom p{margin:0 0 12px;font-size:11px;color:var(--secondary)}.outline-link{display:inline-flex;gap:7px;text-decoration:none;font-weight:700;color:var(--sage-deep);font-size:11px}
+    .main{min-width:0}.topbar{min-height:81px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,3vw,50px);gap:14px}.topbar p{margin:0;color:var(--secondary);font-size:11px}.topbar strong{font-size:13px;letter-spacing:.01em}.top-actions{display:flex;align-items:center;gap:14px}.avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:100%;background:#f3f4f0;border:1px solid var(--line);font-family:Georgia,serif;font-size:15px}.preview-pill{padding:8px 12px;color:var(--sage-deep);background:var(--sage-light);border:1px solid #d9e6d4;border-radius:99px;font-size:10px;letter-spacing:.05em;font-weight:700;white-space:nowrap}.content{padding:clamp(26px,3.5vw,52px);max-width:1460px;margin:auto}.page-heading{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:28px}.eyebrow{color:var(--sage);text-transform:uppercase;letter-spacing:.22em;font-weight:700;font-size:10px;margin:0 0 12px}.page-heading h1{font:600 clamp(25px,3vw,36px)/1.3 Montserrat,Arial,sans-serif;letter-spacing:.02em;margin:0;color:#171717}.page-heading .sub{color:var(--secondary);margin:10px 0 0;font-size:12px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid #ced7c8;border-radius:10px;background:white;color:var(--sage-deep);font-size:11px;font-weight:700;padding:12px 16px;min-height:43px;text-decoration:none;white-space:nowrap}.btn:hover{background:var(--sage-light)}.btn-primary{background:var(--sage);border-color:var(--sage);color:white}.btn-primary:hover{background:var(--sage-deep)}.btn-danger{color:#9b453a;border-color:#ead5d2}.actions{display:flex;gap:8px;flex-wrap:wrap}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.kpi{padding:23px 24px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);min-height:137px}.kpi-label{font-size:11px;color:var(--secondary);font-weight:600;margin-bottom:15px}.kpi-number{font:400 38px/1 Georgia,serif;letter-spacing:-.035em}.kpi-caption{font-size:10px;color:#8b9189;margin-top:10px}.kpi-icon{float:right;width:31px;height:31px;background:var(--sage-light);display:grid;place-items:center;border-radius:50%;font-size:15px;color:var(--sage-deep)}.grid-two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:17px;margin-top:18px}.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:25px;box-shadow:var(--shadow);min-width:0}.panel-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px}.panel-title h2{font:600 20px/1.4 Montserrat,Arial,sans-serif;letter-spacing:.015em;margin:0;color:#171717}.panel-title span{font-size:11px;color:#8a9088}.progress-row{display:grid;grid-template-columns:115px minmax(0,1fr) 48px;gap:12px;align-items:center;margin:15px 0;color:var(--secondary);font-size:11px}.progress{height:9px;background:#f0f1ed;border-radius:99px;overflow:hidden}.progress div{height:100%;background:var(--sage);border-radius:99px;transition:width .3s}.progress-row:nth-of-type(3) .progress div{background:#a9b7a0}.progress-row:nth-of-type(4) .progress div{background:#d4dcd0}.activity-list{display:grid;gap:18px}.activity-row{display:flex;gap:12px;align-items:flex-start;font-size:12px;color:var(--secondary)}.activity-dot{width:9px;height:9px;background:var(--sage);border:2px solid #dce7d7;border-radius:50%;margin-top:6px;flex:0 0 auto}.activity-row strong{color:var(--ink)}.empty-state{color:var(--secondary);border:1px dashed #d8ddd5;border-radius:12px;padding:22px;text-align:center;font-size:12px}.note{font-size:11px;color:#868d82;margin:14px 0 0}.settings-note{border:1px solid #dce6d8;border-radius:14px;padding:14px 18px;background:#f8faf6;color:#576451;margin:18px 0;line-height:1.8}.settings-note strong{color:var(--sage-deep)}
+    .toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:17px}.search{position:relative;flex:1 1 270px}.search input,.filter, .field input,.field select,.field textarea,.table-assignment select{width:100%;min-height:44px;border:1px solid #dfe4dc;border-radius:10px;background:#fff;color:var(--ink);padding:11px 13px;outline:0}.search input{padding-left:38px}.search:before{content:'⌕';position:absolute;left:14px;top:7px;font-size:22px;color:#889381}.filter{width:auto;min-width:135px}.data-table-wrap{overflow-x:auto}.data-table{width:100%;border-collapse:collapse;white-space:nowrap;min-width:720px}.data-table th{text-align:left;color:#969b92;letter-spacing:.1em;text-transform:uppercase;font-size:9px;padding:14px 13px;border-bottom:1px solid var(--line)}.data-table td{padding:16px 13px;border-bottom:1px solid #f1f2ee;font-size:11px}.data-table tbody tr:hover{background:#fafbf8}.guest-name{font-weight:700;color:var(--ink);font-size:12px}.guest-sub{font-size:10px;color:#969b92;margin-top:3px}.status{display:inline-flex;padding:6px 9px;border-radius:99px;font-size:10px;font-weight:700;background:#f2f3f0;color:#747d6f}.status.yes{color:#496842;background:#edf6e9}.status.no{color:#995f58;background:#faf0ee}.status.pending{color:#897964;background:#f7f3eb}.text-btn{border:0;background:transparent;color:var(--sage);font-weight:700;font-size:11px;padding:8px;text-decoration:underline;text-underline-offset:3px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field label{font-size:11px;font-weight:700;color:#555b51}.field textarea{min-height:95px;resize:vertical}.field.full{grid-column:1/-1}.detail-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.detail-heading h3{font:400 28px Georgia,serif;margin:0}.detail-dim{font-size:11px;color:#91978d}.detail-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}.modal-backdrop{position:fixed;inset:0;z-index:50;background:rgba(24,30,22,.34);display:grid;place-items:center;padding:20px}.modal{width:min(570px,100%);max-height:calc(100vh - 35px);overflow:auto;border-radius:20px;background:white;padding:27px;box-shadow:0 30px 110px rgba(0,0,0,.17)}.modal header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:16px}.modal h2{margin:0;font:600 24px/1.35 Montserrat,Arial,sans-serif;letter-spacing:.01em;color:#171717}.xbtn{border:1px solid var(--line);background:white;border-radius:50%;width:34px;height:34px;font-size:20px;display:grid;place-items:center}
+    .seating-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px}.table-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.table-card{background:white;border:1px solid var(--line);border-radius:17px;padding:22px;min-height:255px}.table-card.dragover{border:2px dashed var(--sage);background:#f7faf4}.table-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:15px}.table-head h3{font:400 23px Georgia,serif;margin:0}.table-head span{font-size:10px;color:var(--secondary)}.seat-chips{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;min-height:110px}.guest-chip{padding:9px 10px;border-radius:10px;background:#f5f7f2;color:#3f4e39;display:flex;align-items:center;gap:7px;font-size:11px;border:1px solid #e1e8dc;cursor:grab}.guest-chip:active{cursor:grabbing}.guest-chip button{border:0;background:transparent;padding:0 0 0 2px;color:#687e5e}.unassigned-panel{border:1px solid var(--line);padding:22px;border-radius:17px;background:#fff}.unassigned-panel h3{font:400 23px Georgia,serif;margin:0 0 7px}.unassigned-panel p{margin:0 0 15px;color:var(--secondary);font-size:11px}.unassigned-list{display:grid;gap:8px;max-height:480px;overflow:auto}.unassigned-row{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:7px}.unassigned-row strong{font-size:11px}.table-assignment select{min-height:36px;padding:6px 8px;font-size:11px}
+    .notification-list{display:grid;gap:10px}.notification{display:flex;align-items:start;justify-content:space-between;gap:15px;border:1px solid var(--line);border-radius:12px;padding:15px}.notification strong{display:block;font-size:12px}.notification p{margin:4px 0 0;color:var(--secondary);font-size:11px}.setting-list{display:grid;gap:12px}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:16px 0;border-bottom:1px solid var(--line)}.setting-row strong{font-size:12px}.setting-row p{font-size:11px;color:var(--secondary);margin:4px 0 0}.tag{font-size:10px;font-weight:700;border-radius:99px;padding:7px 11px;background:var(--sage-light);color:var(--sage-deep);white-space:nowrap}.callout{padding:18px;border-radius:13px;border:1px solid #eee2d5;background:#fffdf9;margin-top:22px;color:#7b6b57;font-size:11px;line-height:1.8}
+    .mobile-menu{display:none}.toast{position:fixed;bottom:24px;right:24px;background:#2f4530;color:#fff;border-radius:10px;padding:14px 18px;font-size:12px;box-shadow:0 10px 35px #0002;z-index:100;max-width:320px}
+    @media(max-width:1150px){.shell{grid-template-columns:210px minmax(0,1fr)}.sidebar{padding:23px 12px}.grid-two{grid-template-columns:1fr}.seating-layout{grid-template-columns:1fr}.unassigned-list{grid-template-columns:repeat(2,1fr)}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:760px){.shell{display:block}.sidebar{position:static;display:none;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px 20px}.sidebar.open{display:flex}.sidebar .brand{display:none}.sidebar-bottom{display:none}.nav-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.side-caption{display:none}.nav-btn{font-size:11px}.topbar{min-height:68px;padding:12px 18px}.mobile-menu{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:white;font-size:21px}.topbar p{display:none}.topbar strong{font-size:12px}.top-actions{gap:8px}.avatar{width:32px;height:32px}.content{padding:26px 16px}.page-heading{display:block}.page-heading .actions{margin-top:20px}.kpis{gap:9px}.kpi{padding:17px;min-height:118px}.kpi-number{font-size:32px}.panel{padding:18px}.progress-row{grid-template-columns:86px minmax(0,1fr) 29px;gap:7px}.table-grid{grid-template-columns:1fr}.unassigned-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:1}.modal{padding:20px}.rsvp-spacer{display:none}}
+    @media(max-width:390px){.preview-pill{display:none}.kpi{padding:14px}.kpi-label{font-size:10px}.kpi-caption{font-size:9px}.nav-btn{padding:10px}.page-heading h1{font-size:32px}}
+  
+/* Tipografia uniforme aprovada: DM Sans Regular 400 em todos os títulos;
+   Montserrat mantém-se nos textos, formulários, botões e menus.
+   A assinatura caligráfica Hugo e Márcia e o monograma H | M não são alterados. */
+h1,h2,h3,h4,h5,h6,
+.rsvp-person #greeting,
+.page-heading h1,.panel-title h2,.detail-heading h3,.table-head h3,.unassigned-panel h3,.modal h2 {
+  font-family:'DM Sans',Arial,sans-serif!important;
+  font-weight:400!important;
+}
+.table-meta{display:flex;align-items:flex-end;flex-direction:column;gap:7px}
+.table-edit-btn{border:1px solid #d8e0d5;background:#fff;color:var(--sage-deep);border-radius:20px;padding:6px 12px;font:600 10px Montserrat,Arial,sans-serif;cursor:pointer}
+.table-edit-btn:hover{background:var(--sage-light)}
+.table-notes{margin:0 0 15px;color:var(--secondary);font-size:11px;line-height:1.5}
+.table-helper{font-size:11px;color:var(--secondary);margin:18px 0}
+.btn-danger-soft{border-color:#e8d3d3!important;color:#9d5050!important;background:#fff!important}
+.table-modal-actions{flex-wrap:wrap}
+@media(max-width:440px){.table-meta{align-items:flex-end}.table-head h3{font-size:18px}.table-modal-actions .btn{flex:1 1 130px}}
+.guest-chip{max-width:100%;flex-wrap:wrap}.guest-chip strong{font-weight:600}.guest-chip select{max-width:165px;padding:6px 9px;min-height:31px;border:1px solid #d5dfcf;border-radius:8px;background:white;color:#465b3d;font:500 10px Montserrat,Arial,sans-serif}.guest-chip button{font-size:18px;line-height:1}
+
+/* Plano de mesas visual, círculos com iniciais e distribuição interativa */
+.seat-toolbar{display:flex;flex-direction:column;align-items:flex-start;gap:13px;margin:10px 0 22px}
+.seat-view-switch{display:inline-flex;gap:4px;padding:5px;border:1px solid #e5e5de;border-radius:999px;background:#fbfaf8}
+.seat-view-switch button{border:0;background:transparent;color:#757b73;border-radius:99px;padding:10px 17px;font:600 11px Montserrat,Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.seat-view-switch button.active{background:#60764f;color:white;box-shadow:0 2px 9px #475b3e25}
+.seat-selection{display:flex;align-items:center;flex-wrap:wrap;gap:12px;color:#73786f;font-size:11px;line-height:1.6}
+.seat-selection strong{color:#272923}
+.seat-selection-clear{border:1px solid #d6ddcf;background:white;border-radius:99px;color:#4e6143;padding:8px 13px;cursor:pointer;font:600 10px Montserrat,Arial,sans-serif}
+.seating-layout:has(.seat-map-mode){grid-template-columns:minmax(0,1fr) minmax(220px,255px);align-items:start}
+.table-grid.seat-map-mode{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:18px}
+.table-grid.seat-list-mode{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+.seat-map-mode .table-card{min-width:0;padding:19px 15px 17px;border:1px solid #e8e6df;background:#fffefa;box-shadow:0 11px 26px #4b4a4010;border-radius:17px}
+.seat-map-mode .table-head{padding:0 3px 10px;border-bottom:0;margin:0;gap:7px}
+.seat-map-mode .table-head h3{font:400 17px/1.3 'DM Sans',Montserrat,Arial,sans-serif!important;letter-spacing:0}
+.table-overline{display:block;margin-bottom:4px;color:#a99775!important;font-size:9px!important;letter-spacing:.18em;font-weight:700}
+.seat-map{width:100%}
+.seat-map-orbit{width:min(100%,296px);aspect-ratio:1;position:relative;margin:4px auto 3px}
+.seat-map-core{position:absolute;z-index:1;left:50%;top:50%;width:43%;height:43%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid #ccb98d;background:radial-gradient(circle at 35% 20%,#fff 10%,#fdfaf5 90%);color:#524c43;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px;padding:8px;box-shadow:0 2px 9px #80704d10}
+button.seat-map-core{cursor:pointer}
+button.seat-map-core:hover{background:#f3f7ee;border-color:#71825f}
+.seat-map-core span{font:400 clamp(11px,1.2vw,15px)/1.25 'DM Sans',Montserrat,Arial,sans-serif;overflow-wrap:anywhere;max-width:100%}
+.seat-map-core small{font:500 9px Montserrat,Arial,sans-serif;color:#928773}
+.seat-bubble{z-index:2;position:absolute;display:grid;place-items:center;transform:translate(-50%,-50%);width:clamp(31px,3.3vw,39px);height:clamp(31px,3.3vw,39px);border:2px solid white;border-radius:50%;background:var(--bubble-color,#617957);color:white;font:700 10px Montserrat,Arial,sans-serif;letter-spacing:.02em;box-shadow:0 2px 0 1px #d6d8d4,0 4px 8px #242a2027;cursor:pointer;touch-action:manipulation;transition:transform .16s ease,box-shadow .16s ease}
+.seat-bubble:hover,.seat-bubble.selected{transform:translate(-50%,-50%) scale(1.13);box-shadow:0 0 0 3px #d7e5d0,0 5px 12px #36422d33}
+.seat-bubble--empty{border:1.5px dashed #c7cbbd;background:#f0f1ea;color:#99a297;box-shadow:none;font-size:17px;font-weight:400}
+.seat-bubble--empty:disabled{opacity:.68;cursor:default}
+.seat-bubble--empty:not(:disabled){border-color:#759566;color:#4f7546;background:#e7efdf;cursor:pointer}
+.seat-map-extra{color:#8d887e;text-align:center;font-size:10px}
+.seat-map-names{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px 0 4px;min-height:28px}
+.seat-map-names button{display:flex;align-items:center;gap:5px;border:0;background:transparent;color:#666f61;font-size:10px;padding:4px 6px;cursor:pointer}
+.seat-map-names button:hover{color:#2c4430}
+.seat-map-names button span,.unassigned-avatar{display:grid;place-items:center;width:20px;height:20px;flex-shrink:0;border-radius:50%;color:white;font:700 8px Montserrat,Arial,sans-serif}
+.seat-map-names p{font-size:10px;color:#979d92;text-align:center}
+.seating-layout:has(.seat-map-mode) .unassigned-panel{position:sticky;top:16px}
+.unassigned-person{display:flex;align-items:center;gap:8px;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:#343d32}
+.unassigned-avatar{width:26px;height:26px;font-size:9px}
+.table-grid .table-card.dragover{background:#f0f6eb;border-color:#71895f;outline:2px dashed #8b9d7d;outline-offset:1px}
+@media(max-width:1380px){.seating-layout:has(.seat-map-mode){grid-template-columns:minmax(0,1fr) 210px}.table-grid.seat-map-mode{gap:12px}.seat-map-mode .table-card{padding:14px 10px}.seat-bubble{width:33px;height:33px}}
+@media(max-width:1120px){.seating-layout:has(.seat-map-mode){grid-template-columns:1fr}.seating-layout:has(.seat-map-mode) .unassigned-panel{position:static}.table-grid.seat-map-mode{grid-template-columns:repeat(2,minmax(0,1fr))}.seat-bubble{width:37px;height:37px}}
+@media(max-width:680px){.table-grid.seat-map-mode,.table-grid.seat-list-mode{grid-template-columns:1fr}.seat-map-mode .table-card{padding:17px 14px}.seat-map-orbit{width:min(100%,332px)}.seat-bubble{width:clamp(31px,9vw,41px);height:clamp(31px,9vw,41px)}.seat-map-core span{font-size:15px}.seat-view-switch{max-width:100%}.seat-view-switch button{font-size:10px;padding:9px 11px}}
+
+/* Identidade cromática do casamento: branco, preto, verde-sálvia e champanhe */
+.seat-legend{display:flex;gap:15px 20px;align-items:center;flex-wrap:wrap;color:#555c52;font:500 10px Montserrat,Arial,sans-serif;letter-spacing:.01em}
+.seat-legend span{display:inline-flex;align-items:center;gap:7px}
+.seat-legend-dot{display:inline-block;width:12px;height:12px;border:1.5px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #d7d9d1}
+.seat-legend-dot.sage{background:#60764f}
+.seat-legend-dot.gray{background:#777f75}
+.seat-legend-dot.gold{background:#a39278}
+.seat-map-mode .table-card{background:#fff;border-color:#e5e5df;box-shadow:0 11px 26px #27271e09}
+.seat-map-core{border-color:#b9aa8e;background:#fff;color:#262626}
+.seat-map-core small{color:#74766f}
+.seat-bubble{box-shadow:0 1px 0 1px #d5d9cf,0 3px 7px #20261d20}
+.seat-bubble.selected{box-shadow:0 0 0 3px #dce7d5,0 4px 13px #28382036}
+.seat-bubble--empty{background:#f5f6f2;color:#9aa399;border-color:#cbd2c5;box-shadow:none}
+.seat-bubble--empty:not(:disabled){background:#eaf0e6;border-color:#879e7c;color:#58724d}
+.seat-map-names button{color:#383d37}
+.seat-map-names button:hover{color:#60764f}
+
+/* Identidade Hugo & Márcia: painel privado, branco/preto/sálvia/bordô */
+:root{--white:#fff;--ink:#191919;--secondary:#616361;--faint:#959995;--sage:#60764f;--sage-deep:#485d40;--sage-light:#f0f4ed;--line:#e6e6e2;--surface:#fafaf9;--wine:#783348;--wine-soft:#f9f4f5;--gold:#a09284}
+body{background:#fff;color:#191919}
+.sidebar{background:#fff;border-right-color:#e8e8e6}
+.brand-symbol span{color:var(--wine)}
+.brand-text{color:#575f56}
+.side-caption{color:var(--wine);font-weight:600}
+.nav-btn.active{background:#f2f5ef;color:var(--sage-deep)}
+.nav-btn:hover{color:var(--wine)}
+.page-heading h1,.panel-title h2,.detail-heading h3,.table-head h3,.unassigned-panel h3,.modal h2{font-family:'DM Sans',Arial,sans-serif!important;font-weight:400!important}
+.eyebrow{color:var(--wine)}
+.topbar{background:#fff;border-bottom-color:#ededed}
+.preview-pill{color:var(--wine);border-color:#e3cad2;background:var(--wine-soft)}
+.kpi,.panel,.unassigned-panel{border-color:#e8e8e4;background:#fff}
+.kpi-number{color:#151515}
+.btn-primary{background:var(--sage);border-color:var(--sage);color:white}
+.btn-primary:hover{background:var(--sage-deep);border-color:var(--sage-deep)}
+.btn:not(.btn-primary):hover{color:var(--wine);border-color:#d9bdc4;background:var(--wine-soft)}
+.status.yes{background:#edf4e9;color:#47683f}
+.status.pending{background:#f9f4f5;color:var(--wine)}
+.table-overline{color:var(--wine)!important}
+.seat-legend-dot.sage{background:var(--sage)}
+.seat-legend-dot.gray{background:var(--wine)}
+.seat-legend-dot.gold{background:#a09284}
+.seat-map-mode .table-card{background:#fff;border-color:#e8e7e3}
+.seat-map-core{border-color:#b9aba2;background:#fff;color:#191919}
+.seat-map-core small{color:#727272}
+.seat-view-switch button.active{background:var(--sage)}
+.seat-bubble.selected{box-shadow:0 0 0 3px #78334833,0 5px 14px #4d2b362a}
+.table-edit-btn{border-color:#c8d2c3;color:var(--sage-deep)}
+.table-edit-btn:hover{border-color:var(--wine);color:var(--wine)}
+.unassigned-avatar{border:1.5px solid #fff}
+.modal{border:1px solid #eae8e4}
+.toast{background:#202020}
+
+.actions label.btn{cursor:pointer}
+.actions label.btn:hover{background:#f7f4f4;border-color:#783348;color:#783348}
+@media(max-width:740px){.actions{gap:6px}.actions .btn{font-size:10px;padding:10px 11px;min-height:41px}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="shell">
+ <aside class="sidebar" id="sidebar">
+   <a class="brand" href="./" aria-label="Voltar ao site do casamento"><div class="brand-symbol">H<span>|</span>M</div><div class="brand-text">Wedding<br>management</div></a>
+   <div class="side-caption">Área dos noivos</div>
+   <nav class="nav-list" aria-label="Navegação administrativa">
+     <button class="nav-btn active" data-page="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="8" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="15" width="7" height="6" rx="1"/></svg>Visão geral</button>
+     <button class="nav-btn" data-page="guests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5v1"/></svg>Convidados</button>
+     <button class="nav-btn" data-page="children"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3"/><path d="M7 21l1-7h8l1 7M5 14l3-1m11 1-3-1"/></svg>Crianças</button>
+     <button class="nav-btn" data-page="seating"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M2 10v4M22 10v4M10 2h4M10 22h4"/></svg>Plano de mesas</button>
+     <button class="nav-btn" data-page="notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>Notificações</button>
+     <button class="nav-btn" data-page="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg>Definições</button>
+   </nav>
+   <div class="sidebar-bottom"><p>Pré-visualização sem dados privados.</p><a class="outline-link" href="./">← Ver o website</a></div>
+ </aside>
+ <div class="main">
+  <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" aria-label="Abrir menu" id="menuBtn">☰</button><div><strong>Hugo & Márcia</strong><p>Administração do casamento · 21 maio 2027</p></div></div><div class="top-actions"><span class="preview-pill">DEMONSTRAÇÃO</span><div class="avatar" aria-label="Área reservada, modelo visual">H | M</div></div></header>
+  <main class="content" id="view" tabindex="-1"></main>
+ </div>
+</div>
+<div class="modal-backdrop" id="modal" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><header><h2 id="modalTitle">Editar convidado</h2><button type="button" class="xbtn" id="closeModal" aria-label="Fechar">×</button></header><div id="modalBody"></div></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script>
+(()=>{'use strict';
+// DEMONSTRAÇÃO: sem autenticação ou backend. É possível importar CSV apenas por decisão explícita do utilizador; nomes não são incluídos no código.
+const guests=[
+{id:'g1',name:'Marta Exemplo',side:'Hugo',type:'Família',status:'yes',diet:'Nenhuma',allergies:'',table:'T1',email:''},
+{id:'g2',name:'Diogo Exemplo',side:'Hugo',type:'Família',status:'yes',diet:'Vegetariano',allergies:'',table:'T1',email:''},
+{id:'g3',name:'Lúcia Exemplo',side:'Márcia',type:'Família',status:'pending',diet:'Nenhuma',allergies:'',table:null,email:''},
+{id:'g4',name:'Gonçalo Exemplo',side:'Hugo',type:'Amigos',status:'yes',diet:'Nenhuma',allergies:'',table:'T2',email:''},
+{id:'g5',name:'Sara Modelo',side:'Márcia',type:'Amigos',status:'no',diet:'Vegan',allergies:'',table:null,email:''},
+{id:'g6',name:'Tiago Modelo',side:'Márcia',type:'Amigos',status:'yes',diet:'Nenhuma',allergies:'Intolerância a lactose (exemplo)',table:'T2',email:''},
+{id:'g7',name:'Carolina Modelo',side:'Hugo',type:'Amigos',status:'pending',diet:'Nenhuma',allergies:'',table:null,email:''},
+{id:'g8',name:'Rui Demonstração',side:'Márcia',type:'Família',status:'yes',diet:'Nenhuma',allergies:'',table:'T1',email:''},
+{id:'g9',name:'Andreia Demonstração',side:'Hugo',type:'Família',status:'pending',diet:'Nenhuma',allergies:'',table:null,email:''},
+{id:'g10',name:'Henrique Demonstração',side:'Márcia',type:'Amigos',status:'pending',diet:'Nenhuma',allergies:'',table:null,email:''},
+{id:'g11',name:'Filipa Modelo',side:'Márcia',type:'Família',status:'yes',diet:'Nenhuma',allergies:'',table:null,email:''},
+{id:'g12',name:'Miguel Modelo',side:'Hugo',type:'Amigos',status:'pending',diet:'Nenhuma',allergies:'',table:null,email:''}];
+const children=[{id:'c1',name:'Lia Exemplo',side:'Hugo',status:'yes',adult:'g1',table:'T1'},{id:'c2',name:'Tomé Exemplo',side:'Hugo',status:'pending',adult:null,table:null},{id:'c3',name:'Eva Modelo',side:'Márcia',status:'yes',adult:'g8',table:'T1'},{id:'c4',name:'Leo Modelo',side:'Márcia',status:'pending',adult:null,table:null}];
+const tables=[{id:'T1',name:'Mesa Oliveiras',capacity:8,shape:'Redonda',notes:''},{id:'T2',name:'Mesa Jardim',capacity:8,shape:'Redonda',notes:''},{id:'T3',name:'Mesa Pátio',capacity:8,shape:'Redonda',notes:''}];
+let seatMode='visual', seatSelectedId=null;
+let page='overview', guestFilters={q:'',side:'all',status:'all',type:'all'}, childSide='all', lastActivity=[{label:'Marta Exemplo',detail:'confirmou presença · demonstração'},{label:'Tiago Modelo',detail:'indicou uma restrição alimentar · demonstração'},{label:'Lúcia Exemplo',detail:'aguarda confirmação · demonstração'}], notices=[{title:'Lembrete de confirmação',detail:'Modelo de notificação. Nenhum email foi enviado.',when:'Não enviado'},{title:'Alteração de presença',detail:'Modelo de aviso administrativo.',when:'Não enviado'}];
+const view=document.getElementById('view'),modal=document.getElementById('modal'),toast=document.getElementById('toast');
+const clean=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const labels={yes:'Confirmado',no:'Não vai',pending:'Pendente'}, statusBadge=s=>`<span class="status ${clean(s)}">${labels[s]||'Pendente'}</span>`;
+const navNames={overview:['Visão geral','Acompanhem todas as respostas num só lugar.'],guests:['Convidados','Consultem e editem a lista de convidados.'],children:['Crianças','Apenas familiares podem confirmar crianças previamente convidadas.'],seating:['Plano de mesas','Organizem os lugares, visíveis apenas aos noivos.'],notifications:['Notificações','Revejam mensagens e avisos automáticos.'],settings:['Definições','Regras e opções do casamento.']};
+function addActivity(label,detail){lastActivity.unshift({label,detail});lastActivity=lastActivity.slice(0,8)}
+function notify(message){toast.textContent=message;toast.hidden=false;clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>toast.hidden=true,3600)}
+function head(actions=''){return `<div class="page-heading"><div><p class="eyebrow">HUGO E MÁRCIA · 21.05.2027</p><h1>${navNames[page][0]}</h1><p class="sub">${navNames[page][1]}</p></div>${actions?`<div class="actions">${actions}</div>`:''}</div>`}
+function currentStats(){return {total:guests.length,yes:guests.filter(g=>g.status==='yes').length,no:guests.filter(g=>g.status==='no').length,pending:guests.filter(g=>g.status==='pending').length,children:children.filter(c=>c.status==='yes').length,allergies:guests.filter(g=>g.status==='yes'&&g.allergies.trim()).length}}
+function switchPage(p){if(!navNames[p])return;page=p;document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.page===p));document.getElementById('sidebar').classList.remove('open');render();if(location.hash!=='#'+p)history.replaceState(null,'','#'+p);window.scrollTo({top:0,behavior:'smooth'})}
+function render(){saveDemo();const s=currentStats();
+ if(page==='overview'){view.innerHTML=head(`<button class="btn" id="exportOverview">Exportar CSV ↗</button><button class="btn btn-primary" id="goGuests">Gerir convidados →</button>`)+`<div class="kpis"><div class="kpi"><span class="kpi-icon">♧</span><div class="kpi-label">Convidados adultos</div><div class="kpi-number">${s.total}</div><div class="kpi-caption">Dados fictícios desta demonstração</div></div><div class="kpi"><span class="kpi-icon">✓</span><div class="kpi-label">Presenças confirmadas</div><div class="kpi-number">${s.yes+s.children}</div><div class="kpi-caption">${s.yes} adultos e ${s.children} crianças</div></div><div class="kpi"><span class="kpi-icon">◷</span><div class="kpi-label">Por responder</div><div class="kpi-number">${s.pending}</div><div class="kpi-caption">Ainda sem confirmação</div></div><div class="kpi"><span class="kpi-icon">✳</span><div class="kpi-label">Restrições alimentares</div><div class="kpi-number">${s.allergies}</div><div class="kpi-caption">Alertas alimentares fictícios</div></div></div><div class="grid-two"><article class="panel"><div class="panel-title"><h2>Estado das confirmações</h2><span>Adultos · demonstração</span></div>${[['Confirmados',s.yes],['Pendentes',s.pending],['Não vão',s.no]].map((x,i)=>`<div class="progress-row"><span>${x[0]}</span><div class="progress"><div style="width:${s.total?(100*x[1]/s.total).toFixed(1):0}%;${i===1?'background:#aebba5':i===2?'background:#d9e0d4':''}"></div></div><strong>${x[1]}</strong></div>`).join('')}<div class="settings-note" style="margin-top:27px">O prazo para confirmar presença termina a <strong>1 de fevereiro de 2027</strong>.</div></article><article class="panel"><div class="panel-title"><h2>Atividade recente</h2><span>Simulação</span></div><div class="activity-list">${lastActivity.slice(0,5).map(a=>`<div class="activity-row"><span class="activity-dot"></span><div><strong>${clean(a.label)}</strong><br>${clean(a.detail)}</div></div>`).join('')}</div></article></div><p class="note">O painel usa convidados inventados: não contém a lista verdadeira nem grava alterações no servidor.</p>`;
+  document.getElementById('goGuests').onclick=()=>switchPage('guests');document.getElementById('exportOverview').onclick=exportCSV;return;}
+ if(page==='guests'){view.innerHTML=head(`<label class="btn" for="guestCsvFile">Importar lista CSV</label><input type="file" id="guestCsvFile" accept=".csv,text/csv" hidden><button class="btn" id="resetGuestData">Limpar dados locais</button><button class="btn" id="downloadCsv">Exportar CSV ↗</button><button class="btn btn-primary" id="addGuest">+ Adicionar convidado</button>`)+`<div class="toolbar"><label class="search"><input id="guestSearch" placeholder="Pesquisar convidado..." value="${clean(guestFilters.q)}" aria-label="Pesquisar convidado"></label><select id="filterSide" class="filter" aria-label="Filtrar lado"><option value="all">Ambos os lados</option><option value="Hugo">Hugo</option><option value="Márcia">Márcia</option></select><select id="filterType" class="filter" aria-label="Filtrar tipo"><option value="all">Todos</option><option value="Família">Família</option><option value="Amigos">Amigos</option></select><select id="filterStatus" class="filter" aria-label="Filtrar estado"><option value="all">Todos os estados</option><option value="yes">Confirmados</option><option value="pending">Pendentes</option><option value="no">Não vão</option></select></div><div class="panel" style="padding:6px 10px"><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Convidado</th><th>Lado</th><th>Tipo</th><th>Resposta</th><th>Mesa</th><th>Alimentação</th><th></th></tr></thead><tbody id="guestRows"></tbody></table></div></div><p id="rowCount" class="note"></p>`;
+  for(const [id,value] of [['filterSide',guestFilters.side],['filterType',guestFilters.type],['filterStatus',guestFilters.status]])document.getElementById(id).value=value;
+  document.getElementById('guestSearch').oninput=e=>{guestFilters.q=e.target.value;updateGuestRows()};for(const [id,prop] of [['filterSide','side'],['filterType','type'],['filterStatus','status']])document.getElementById(id).onchange=e=>{guestFilters[prop]=e.target.value;updateGuestRows()};
+  document.getElementById('downloadCsv').onclick=exportCSV;document.getElementById('addGuest').onclick=()=>editGuest(null);document.getElementById('guestCsvFile').onchange=e=>importGuestFile(e.target.files?.[0]);document.getElementById('resetGuestData').onclick=()=>{if(window.confirm('Apagar os dados guardados apenas neste navegador e repor a demonstração?')){localStorage.removeItem('hm-admin-demo-v2');window.location.reload()}};updateGuestRows();return;}
+ if(page==='children'){view.innerHTML=head()+`<div class="settings-note"><strong>Regra definida:</strong> familiares do Hugo podem selecionar apenas crianças da lista do Hugo; familiares da Márcia, apenas crianças da lista da Márcia. Os amigos não podem adicionar crianças, e cada criança só pode ter uma confirmação ativa.</div><div class="toolbar"><select id="filterChildSide" class="filter" aria-label="Filtrar crianças"><option value="all">Ambos os lados</option><option>Hugo</option><option>Márcia</option></select></div><div class="panel" style="padding:6px 10px"><div class="data-table-wrap"><table class="data-table" style="min-width:590px"><thead><tr><th>Criança</th><th>Família</th><th>Confirmação</th><th>Confirmada por</th><th>Mesas</th><th></th></tr></thead><tbody id="childRows"></tbody></table></div></div>`;document.getElementById('filterChildSide').value=childSide;document.getElementById('filterChildSide').onchange=e=>{childSide=e.target.value;updateChildRows()};updateChildRows();return;}
+ if(page==='seating'){view.innerHTML=head(`<button class="btn" id="exportSeating">Exportar plano CSV</button><button class="btn" id="resetSeating">Limpar lugares</button><button class="btn btn-primary" id="addTable">+ Nova mesa</button>`)+`<div class="settings-note"><strong>Privado dos noivos.</strong> As mesas e as confirmações não aparecem no site dos convidados. Podem criar, renomear e editar as mesas e escolher a distribuição dos lugares. Esta demonstração guarda tudo apenas neste navegador.</div><div class="seat-toolbar"><div class="seat-legend" aria-label="Legenda das cores"><span><i class="seat-legend-dot sage"></i> Convidados do Hugo</span><span><i class="seat-legend-dot gray"></i> Convidados da Márcia</span><span><i class="seat-legend-dot gold"></i> Crianças</span></div><div class="seat-view-switch" aria-label="Tipo de visualização"><button type="button" data-seat-mode="visual">◯ Vista visual</button><button type="button" data-seat-mode="list">☷ Vista em lista</button></div><span id="seatSelection" class="seat-selection" aria-live="polite"></span></div><div class="seating-layout"><div class="table-grid" id="tableGrid"></div><aside class="unassigned-panel"><h3>Por distribuir</h3><p>Convidados confirmados sem mesa atribuída.</p><div class="unassigned-list" id="unassignedList"></div></aside></div>`;document.getElementById('exportSeating').onclick=exportTablePlan;document.getElementById('addTable').onclick=()=>editTable(null);document.getElementById('resetSeating').onclick=()=>{if(!window.confirm('Retirar todos os convidados das mesas?'))return;guests.forEach(g=>g.table=null);children.forEach(c=>c.table=null);seatSelectedId=null;render();notify('Distribuição das mesas reiniciada nesta demonstração.')};document.querySelectorAll('[data-seat-mode]').forEach(b=>b.onclick=()=>{seatMode=b.dataset.seatMode;seatSelectedId=null;renderSeating()});renderSeating();return;}
+ if(page==='notifications'){view.innerHTML=head(`<button class="btn btn-primary" id="simulateNotice">+ Simular aviso</button>`)+`<div class="panel"><div class="panel-title"><h2>Histórico de notificações</h2><span>Nenhuma mensagem real enviada</span></div><div class="notification-list">${notices.map(n=>`<div class="notification"><div><strong>${clean(n.title)}</strong><p>${clean(n.detail)}</p></div><span class="tag">${clean(n.when)}</span></div>`).join('')}</div></div><div class="callout">Na versão definitiva, Hugo e Márcia poderão receber alertas de confirmações e alterações, e os convidados poderão receber mensagens automáticas. Esta demonstração não envia emails nem SMS.</div>`;document.getElementById('simulateNotice').onclick=()=>{notices.unshift({title:'Nova confirmação (simulada)',detail:'Exemplo de aviso que os noivos receberiam ao confirmar um convidado.',when:'Simulação'});addActivity('Notificação','aviso simulado no painel');render();notify('Aviso simulado — nenhum email enviado.')};return;}
+ if(page==='settings'){view.innerHTML=head()+`<div class="panel"><div class="panel-title"><h2>Regras do casamento</h2><span>Definidas para o futuro sistema</span></div><div class="setting-list"><div class="setting-row"><div><strong>Prazo de confirmação</strong><p>Até 1 de fevereiro de 2027.</p></div><span class="tag">01.02.2027</span></div><div class="setting-row"><div><strong>Pesquisa de convidados</strong><p>O nome só aparece como sugestão após o convidado começar a escrever.</p></div><span class="tag">Público</span></div><div class="setting-row"><div><strong>Crianças</strong><p>Permitidas apenas para familiares, dentro da lista do lado respetivo.</p></div><span class="tag">Restrito</span></div><div class="setting-row"><div><strong>Plano de mesas</strong><p>Exclusivo dos noivos, sem acesso para convidados.</p></div><span class="tag">Privado</span></div><div class="setting-row"><div><strong>Respostas alimentares</strong><p>Preferências e alergias associadas ao convidado; acesso autorizado apenas.</p></div><span class="tag">Privado</span></div><div class="setting-row"><div><strong>Notificações</strong><p>Alertas aos noivos e mensagens aos convidados na versão definitiva.</p></div><span class="tag">Por ligar</span></div></div></div><div class="callout"><strong>O que falta para ativar esta área:</strong> um projeto de base de dados separado do da Love Essences, autenticação dos dois noivos, políticas de acesso (RLS), API segura para o RSVP, envio de emails e testes antes de importar os 116 registos.</div>`;return;}
+}
+function updateGuestRows(){const filtered=guests.filter(g=>(guestFilters.side==='all'||g.side===guestFilters.side)&&(guestFilters.type==='all'||g.type===guestFilters.type)&&(guestFilters.status==='all'||g.status===guestFilters.status)&&norm(g.name).includes(norm(guestFilters.q)));document.getElementById('guestRows').innerHTML=filtered.length?filtered.map(g=>`<tr><td><div class="guest-name">${clean(g.name)}</div><div class="guest-sub">ID ${clean(g.id)}</div></td><td>${clean(g.side)}</td><td>${clean(g.type)}</td><td>${statusBadge(g.status)}</td><td>${g.table?clean(tables.find(t=>t.id===g.table)?.name||g.table):'—'}</td><td>${clean(g.diet)}${g.allergies?'<span style="color:#ae6653"> • !</span>':''}</td><td><button class="text-btn" data-edit="${clean(g.id)}">Editar</button></td></tr>`).join(''):`<tr><td colspan="7"><div class="empty-state">Não foram encontrados convidados.</div></td></tr>`;document.getElementById('rowCount').textContent=`${filtered.length} de ${guests.length} convidados adultos (dados fictícios).`;document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editGuest(b.dataset.edit))}
+function updateChildRows(){const filtered=children.filter(c=>childSide==='all'||c.side===childSide);document.getElementById('childRows').innerHTML=filtered.map(c=>`<tr><td><div class="guest-name">${clean(c.name)}</div><div class="guest-sub">ID ${clean(c.id)}</div></td><td>${clean(c.side)}</td><td>${statusBadge(c.status)}</td><td>${clean(guests.find(g=>g.id===c.adult)?.name||'—')}</td><td>${clean(c.table||'—')}</td><td><button class="text-btn" data-child-edit="${clean(c.id)}">Editar</button></td></tr>`).join('');document.querySelectorAll('[data-child-edit]').forEach(b=>b.onclick=()=>editChild(b.dataset.childEdit))}
+function showModal(title,body){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;modal.hidden=false}
+function closeModal(){modal.hidden=true;document.getElementById('modalBody').replaceChildren()}
+function editGuest(id){const existing=id?guests.find(g=>g.id===id):null;const x=existing||{name:'',side:'Hugo',type:'Família',status:'pending',diet:'Nenhuma',allergies:'',table:null,email:''};showModal(existing?'Editar convidado':'Adicionar convidado (neste navegador)',`<form id="guestEditForm"><div class="form-grid"><div class="field full"><label for="editName">Nome</label><input id="editName" value="${clean(x.name)}" required maxlength="80" placeholder="Nome de demonstração"></div><div class="field"><label for="editSide">Lado</label><select id="editSide"><option>Hugo</option><option>Márcia</option></select></div><div class="field"><label for="editType">Categoria</label><select id="editType"><option>Família</option><option>Amigos</option></select></div><div class="field"><label for="editStatus">Presença</label><select id="editStatus"><option value="pending">Pendente</option><option value="yes">Confirmado</option><option value="no">Não vai</option></select></div><div class="field"><label for="editDiet">Preferência alimentar</label><select id="editDiet"><option>Nenhuma</option><option>Vegetariano</option><option>Vegan</option></select></div><div class="field full"><label for="editAllergies">Alergias ou intolerâncias (fictícias)</label><textarea id="editAllergies" placeholder="Apenas dados inventados nesta demo">${clean(x.allergies)}</textarea></div></div><div class="detail-actions"><button class="btn" type="button" id="cancelGuest">Cancelar</button><button class="btn btn-primary" type="submit">Guardar na demonstração</button></div></form><p class="note">As alterações ficam guardadas neste navegador, mas não são sincronizadas online.</p>`);for(const [id,value] of [['editSide',x.side],['editType',x.type],['editStatus',x.status],['editDiet',x.diet]])document.getElementById(id).value=value;document.getElementById('cancelGuest').onclick=closeModal;document.getElementById('guestEditForm').onsubmit=e=>{e.preventDefault();const n=document.getElementById('editName').value.trim();if(!n)return;const status=document.getElementById('editStatus').value;const val={name:n,side:document.getElementById('editSide').value,type:document.getElementById('editType').value,status,diet:document.getElementById('editDiet').value,allergies:document.getElementById('editAllergies').value.trim()};if(existing){Object.assign(existing,val);if(status!=='yes')existing.table=null; if(existing.type!=='Família'){children.filter(c=>c.adult===existing.id).forEach(c=>{c.adult=null;c.status='pending';c.table=null})} else children.filter(c=>c.adult===existing.id&&c.side!==existing.side).forEach(c=>{c.adult=null;c.status='pending';c.table=null})}else guests.push({...val,id:'demo-g'+(Date.now()%1000000),table:null});addActivity(n,'dados atualizados na demonstração');closeModal();render();notify('Dados de demonstração atualizados.')};}
+function editChild(id){const c=children.find(x=>x.id===id);if(!c)return;const eligible=guests.filter(g=>g.side===c.side&&g.type==='Família');showModal('Editar criança',`<div class="detail-heading"><div><h3>${clean(c.name)}</h3><div class="detail-dim">Família do lado de ${c.side}</div></div>${statusBadge(c.status)}</div><form id="childEditForm"><div class="form-grid"><div class="field full"><label for="childAdult">Familiar responsável pela confirmação</label><select id="childAdult"><option value="">Nenhum</option>${eligible.map(g=>`<option value="${clean(g.id)}">${clean(g.name)}${g.status!=='yes'?' (presença não confirmada)':''}</option>`).join('')}</select></div><div class="field full"><label for="childStatus">Presença da criança</label><select id="childStatus"><option value="pending">Pendente</option><option value="yes">Confirmada</option><option value="no">Não vai</option></select></div></div><div class="detail-actions"><button class="btn" type="button" id="cancelChild">Cancelar</button><button class="btn btn-primary" type="submit">Guardar</button></div></form>`);document.getElementById('childAdult').value=c.adult||'';document.getElementById('childStatus').value=c.status;document.getElementById('cancelChild').onclick=closeModal;document.getElementById('childEditForm').onsubmit=e=>{e.preventDefault();const adultId=document.getElementById('childAdult').value;const status=document.getElementById('childStatus').value;const adult=guests.find(g=>g.id===adultId);if(status==='yes'&&(!adult||adult.side!==c.side||adult.type!=='Família'||adult.status!=='yes')){notify('Para confirmar esta criança, escolhe um familiar do mesmo lado com presença confirmada.');return}c.adult=adultId||null;c.status=status;if(status!=='yes')c.table=null;addActivity(c.name,'resposta da criança atualizada na demonstração');closeModal();render();notify('Criança atualizada — sem guardar no servidor.')};}
+
+// Importação privada: CSV escolhido pelo utilizador. O conteúdo NÃO é enviado a nenhum servidor.
+function parseGuestCSV(text){
+ const rows=[];let row=[],value="",quoted=false;
+ text=String(text).replace(/^\uFEFF/,"");
+ for(let i=0;i<text.length;i++){
+  const ch=text[i];
+  if(ch==='"'&&quoted&&text[i+1]==='"'){value+='"';i++;continue}
+  if(ch==='"'){quoted=!quoted;continue}
+  if(!quoted&&ch===';'){row.push(value);value="";continue}
+  if(!quoted&&(ch==='\n'||ch==='\r')){
+    if(ch==='\r'&&text[i+1]==='\n')i++;
+    row.push(value);value="";
+    if(row.some(x=>x.trim()))rows.push(row);
+    row=[];continue;
+  }
+  value+=ch;
+ }
+ row.push(value);if(row.some(x=>x.trim()))rows.push(row);
+ if(quoted)throw Error("CSV inválido: aspas não fechadas.");
+ return rows;
+}
+async function importGuestFile(file){
+ if(!file)return;
+ if(file.size>500000)return notify("O ficheiro CSV é demasiado grande.");
+ let content;
+ try{content=await file.text()}catch(e){return notify("Não foi possível abrir o ficheiro.")}
+ let rows;
+ try{rows=parseGuestCSV(content)}catch(e){return notify(e.message)}
+ if(!rows||rows.length<2)return notify("Não foram encontrados convidados.");
+ const head=rows[0].map(x=>norm(x).trim());
+ const keys=["grupo","nome","tipo","observacoes"];
+ if(keys.some(k=>!head.includes(k)))return notify("O CSV deve ter as colunas grupo, nome, tipo e observacoes.");
+ const at=k=>head.indexOf(k);
+ const incomingAdults=[],incomingChildren=[],used=new Set();
+ for(const cols of rows.slice(1)){
+  const id=String(cols[at("grupo")]||"").trim();
+  const name=String(cols[at("nome")]||"").trim();
+  const notes=String(cols[at("observacoes")]||"");
+  const child=norm(cols[at("tipo")]||"")==="crianca";
+  const sideMatch=notes.match(/Lado:\s*(Hugo|Márcia)/i);
+  if(!/^HM-\d{3}$/.test(id)||used.has(id)||name.length<2||name.length>100||!sideMatch){
+    return notify("Registos inválidos ou repetidos. Confirma a lista privada.");
+  }
+  used.add(id);
+  const side=norm(sideMatch[1])==="hugo"?"Hugo":"Márcia";
+  if(child)incomingChildren.push({id,name,side,status:"pending",adult:null,table:null});
+  else incomingAdults.push({id,name,side,type:/Categoria:\s*familia/i.test(notes)?"Família":"Amigos",status:"pending",diet:"Nenhuma",allergies:"",table:null,email:""});
+ }
+ if(incomingAdults.length+incomingChildren.length!==116||incomingAdults.length!==103||incomingChildren.length!==13){
+   return notify("A lista deve conter 103 adultos e 13 crianças. Ficheiro não importado.");
+ }
+ if(!window.confirm("Importar 116 convidados neste navegador? Os nomes ficam apenas neste dispositivo e não são enviados ao GitHub nem a um servidor. Isto substitui os convidados de demonstração."))return;
+ guests.splice(0,guests.length,...incomingAdults);
+ children.splice(0,children.length,...incomingChildren);
+ seatSelectedId=null;
+ saveDemo();
+ guestFilters={q:"",side:"all",status:"all",type:"all"};
+ render();
+ notify("Lista de 116 convidados importada localmente (103 adultos, 13 crianças).");
+}
+
+function saveDemo(){
+ try{
+  localStorage.setItem("hm-admin-demo-v2",JSON.stringify({guests,children,tables}));
+ }catch(_){}
+}
+function loadDemo(){
+ try{
+  const saved=JSON.parse(localStorage.getItem("hm-admin-demo-v2")||"null");
+  if(!saved||!Array.isArray(saved.tables)||!Array.isArray(saved.guests)||!Array.isArray(saved.children))return;
+  const validTables=saved.tables.filter(t=>t && /^T[a-z0-9]+$/i.test(t.id||"") && typeof t.name==="string" && t.name.length<=80 && Number.isInteger(t.capacity) && t.capacity>=1 && t.capacity<=100);
+  if(validTables.length!==saved.tables.length||validTables.length>100)return;
+  tables.splice(0,tables.length,...validTables.map(t=>({id:t.id,name:t.name,capacity:t.capacity,shape:typeof t.shape==="string"?t.shape:"Redonda",notes:typeof t.notes==="string"?t.notes.slice(0,300):""})));
+  const validGuest=saved.guests.filter(g=>g&&typeof g.name==="string"&&typeof g.id==="string"&&g.name.length<110);
+  const validChild=saved.children.filter(g=>g&&typeof g.name==="string"&&typeof g.id==="string"&&g.name.length<110);
+  if(validGuest.length===saved.guests.length && validGuest.length<=300)guests.splice(0,guests.length,...validGuest);
+  if(validChild.length===saved.children.length && validChild.length<=100)children.splice(0,children.length,...validChild);
+  guests.concat(children).forEach(g=>{if(g.table&&!tables.some(t=>t.id===g.table))g.table=null});
+ }catch(_){}
+}
+function editTable(id){
+ const existing=id?tables.find(t=>t.id===id):null;
+ if(id&&!existing)return notify("Mesa não encontrada.");
+ const model=existing||{name:"",capacity:8,shape:"Redonda",notes:""};
+ const occupied=existing?allSeated().filter(g=>g.table===existing.id).length:0;
+ showModal(existing?"Editar mesa":"Adicionar mesa",`
+ <form id="tableEditForm">
+  <div class="form-grid">
+   <div class="field full"><label for="tableName">Nome da mesa</label><input id="tableName" required maxlength="80" placeholder="Ex.: Mesa Oliveiras" value="${clean(model.name)}"></div>
+   <div class="field"><label for="tableCapacity">Número de lugares</label><input id="tableCapacity" type="number" min="${Math.max(1,occupied)}" max="100" required value="${model.capacity}"></div>
+   <div class="field"><label for="tableShape">Formato</label><select id="tableShape"><option>Redonda</option><option>Retangular</option><option>Quadrada</option><option>Outra</option></select></div>
+   <div class="field full"><label for="tableNotes">Notas para os noivos (opcional)</label><textarea id="tableNotes" maxlength="300" placeholder="Ex.: junto à janela, familiares mais próximos…">${clean(model.notes||"")}</textarea></div>
+  </div>
+  <p class="table-helper">${existing?`${occupied} lugar(es) ocupado(s).`: "A mesa será criada sem convidados atribuídos."} As alterações não aparecem no site dos convidados.</p>
+  <div class="detail-actions table-modal-actions">
+   ${existing?'<button class="btn btn-danger-soft" type="button" id="deleteTable">Eliminar mesa</button>':""}
+   <button class="btn" type="button" id="cancelTable">Cancelar</button>
+   <button class="btn btn-primary" type="submit">Guardar mesa</button>
+  </div>
+ </form>`);
+ document.getElementById("tableShape").value=model.shape||"Redonda";
+ document.getElementById("cancelTable").onclick=closeModal;
+ document.getElementById("tableEditForm").onsubmit=e=>{
+  e.preventDefault();
+  const name=document.getElementById("tableName").value.trim();
+  const capacity=Number(document.getElementById("tableCapacity").value);
+  const shape=document.getElementById("tableShape").value;
+  const notes=document.getElementById("tableNotes").value.trim();
+  if(name.length<2||name.length>80)return notify("Indica um nome entre 2 e 80 caracteres.");
+  if(tables.some(t=>t.id!==id&&t.name.toLocaleLowerCase("pt-PT")===name.toLocaleLowerCase("pt-PT")))return notify("Já existe uma mesa com esse nome.");
+  if(!Number.isInteger(capacity)||capacity<Math.max(1,occupied)||capacity>100)return notify("A capacidade não pode ser inferior aos lugares ocupados.");
+  if(existing)Object.assign(existing,{name,capacity,shape,notes});
+  else tables.push({id:"T"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name,capacity,shape,notes});
+  saveDemo();closeModal();render();notify(existing?"Mesa atualizada.":"Mesa criada.");
+ };
+ if(existing){
+  document.getElementById("deleteTable").onclick=()=>{
+   const count=allSeated().filter(g=>g.table===existing.id).length;
+   if(!window.confirm(count?`Eliminar "${existing.name}"? ${count} convidado(s) ficarão sem mesa.`:`Eliminar "${existing.name}"?`))return;
+   guests.concat(children).forEach(g=>{if(g.table===existing.id)g.table=null});
+   tables.splice(tables.indexOf(existing),1);
+   saveDemo();closeModal();render();notify("Mesa eliminada; convidados mantidos na lista.");
+  };
+ }
+}
+function exportTablePlan(){
+ const rows=[["Mesa","Formato","Capacidade","Convidado","Lado","Tipo"]];
+ for(const t of tables){
+   const assigned=guests.concat(children).filter(g=>g.table===t.id);
+   if(!assigned.length) rows.push([t.name,t.shape||"Redonda",t.capacity,"","",""]);
+   else for(const person of assigned)rows.push([t.name,t.shape||"Redonda",t.capacity,person.name,person.side,guests.includes(person)?person.type:"Criança"]);
+ }
+ const csv="\uFEFF"+rows.map(r=>r.map(c=>'"'+String(c??"").replace(/"/g,'""')+'"').join(";")).join("\r\n");
+ const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+ const a=document.createElement("a");a.href=url;a.download="plano-de-mesas-exemplo-hugo-marcia.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ notify("Plano de mesas exportado (demonstração).");
+}
+const allSeated=()=>[...guests.filter(g=>g.status==='yes'),...children.filter(c=>c.status==='yes')];
+function tableFull(tid){const t=tables.find(x=>x.id===tid);return t&&allSeated().filter(x=>x.table===tid).length>=t.capacity}
+function assignSeat(id,target){const g=allSeated().find(x=>x.id===id);if(!g)return notify('Apenas convidados confirmados podem ser distribuídos.');if(target&&!tables.some(t=>t.id===target))return notify('Mesa inexistente.');if(target&&g.table!==target&&tableFull(target))return notify('Esta mesa já está cheia.');g.table=target||null;saveDemo();renderSeating()}
+
+function seatInitials(name){
+ const parts=String(name||"").trim().split(/\s+/).filter(Boolean);
+ return (parts.length>1?parts[0][0]+parts[parts.length-1][0]:(parts[0]||"?").slice(0,2)).toLocaleUpperCase("pt-PT");
+}
+function seatColor(person){
+ // Hugo em sálvia, Márcia em bordô e crianças em taupe suave.
+ if(children.some(child=>child.id===person.id))return "#A09284";
+ return person.side==="Hugo"?"#60764F":person.side==="Márcia"?"#783348":"#60764F";
+}
+function renderSeating(){
+ const grid=document.getElementById("tableGrid"),unassigned=document.getElementById("unassignedList"),status=document.getElementById("seatSelection");
+ if(!grid||!unassigned)return;
+ const chosen=allSeated().find(g=>g.id===seatSelectedId);
+ if(seatSelectedId&&!chosen)seatSelectedId=null;
+ document.querySelectorAll("[data-seat-mode]").forEach(btn=>{
+   btn.classList.toggle("active",btn.dataset.seatMode===seatMode);
+   btn.setAttribute("aria-pressed",String(btn.dataset.seatMode===seatMode));
+ });
+ if(status)status.innerHTML=chosen?`<span><strong>${clean(chosen.name)}</strong> selecionado(a). Toca numa mesa ou num lugar vazio para mover.</span><button class="seat-selection-clear" id="clearSeatSelection" type="button">Cancelar seleção ×</button>`:'<span>Seleciona uma bolinha com iniciais para mover o convidado. Os círculos vazios representam lugares disponíveis.</span>';
+ const clear=document.getElementById("clearSeatSelection");if(clear)clear.onclick=()=>{seatSelectedId=null;renderSeating()};
+ grid.classList.toggle("seat-map-mode",seatMode==="visual");
+ grid.classList.toggle("seat-list-mode",seatMode==="list");
+ grid.innerHTML=tables.map((t,tableIdx)=>{
+  const occupants=allSeated().filter(g=>g.table===t.id);
+  const cardHead=`<header class="table-head"><div><span class="table-overline">MESA ${String(tableIdx+1).padStart(2,"0")}</span><h3>${clean(t.name)}</h3><span>${clean(t.shape||"Redonda")}</span></div><div class="table-meta"><span>${occupants.length}/${t.capacity} lugares</span><button class="table-edit-btn" type="button" data-edit-table="${clean(t.id)}">Editar</button></div></header>`;
+  let visual="";
+  if(seatMode==="visual"){
+   const maxSlots=Math.min(t.capacity,16);
+   const dots=Array.from({length:maxSlots},(_,i)=>{
+    const a=(i/maxSlots)*Math.PI*2-Math.PI/2, radius=maxSlots>12?42:40;
+    const left=(50+Math.cos(a)*radius).toFixed(3)+"%",top=(50+Math.sin(a)*radius).toFixed(3)+"%";
+    const g=occupants[i];
+    if(g){
+     const selected=seatSelectedId===g.id;
+     return `<button type="button" draggable="true" data-drag="${clean(g.id)}" data-select-seat="${clean(g.id)}" class="seat-bubble${selected?" selected":""}" title="${clean(g.name)}" aria-label="${clean(g.name)} — selecionar para mudar de mesa" aria-pressed="${selected}" style="left:${left};top:${top};--bubble-color:${seatColor(g)}">${clean(seatInitials(g.name))}</button>`;
+    }
+    return `<button type="button" data-place-seat="${clean(t.id)}" class="seat-bubble seat-bubble--empty" title="${chosen?"Colocar "+clean(chosen.name)+" nesta mesa":"Lugar livre"}" aria-label="${chosen?"Colocar "+clean(chosen.name)+" na mesa "+clean(t.name):"Lugar vazio na mesa "+clean(t.name)}" ${chosen?"":"disabled"} style="left:${left};top:${top}">+</button>`;
+   }).join("");
+   visual=`<div class="seat-map" data-table="${clean(t.id)}">
+    <div class="seat-map-orbit">${dots}
+     ${chosen?`<button type="button" data-place-seat="${clean(t.id)}" class="seat-map-core" aria-label="Mover ${clean(chosen.name)} para ${clean(t.name)}"><span>${clean(t.name)}</span><small>${occupants.length}/${t.capacity} lugares</small></button>`:`<div class="seat-map-core"><span>${clean(t.name)}</span><small>${occupants.length}/${t.capacity} lugares</small></div>`}
+    </div>
+    ${t.capacity>16?`<p class="seat-map-extra">Representação dos primeiros 16 lugares; capacidade total: ${t.capacity}.</p>`:""}
+    </div>
+    <div class="seat-map-names">${occupants.length?occupants.map(g=>`<button type="button" data-select-seat="${clean(g.id)}"><span style="background:${seatColor(g)}">${clean(seatInitials(g.name))}</span>${clean(g.name)}</button>`).join(""):'<p>Esta mesa ainda não tem convidados atribuídos.</p>'}</div>`;
+  } else {
+   visual=`<div class="seat-chips">${occupants.map(x=>`<div class="guest-chip" draggable="true" data-drag="${clean(x.id)}"><strong>${clean(x.name)}</strong><select data-move="${clean(x.id)}" aria-label="Mover ${clean(x.name)} para outra mesa"><option value="${clean(t.id)}">Nesta mesa</option>${tables.filter(q=>q.id!==t.id).map(q=>`<option value="${clean(q.id)}" ${tableFull(q.id)?"disabled":""}>${clean(q.name)}</option>`).join("")}</select><button type="button" data-unassign="${clean(x.id)}" title="Retirar desta mesa" aria-label="Retirar ${clean(x.name)} desta mesa">×</button></div>`).join("")||'<span class="empty-state">Ainda sem convidados nesta mesa.</span>'}</div>`;
+  }
+  return `<article class="table-card" data-table="${clean(t.id)}">${cardHead}${t.notes?`<p class="table-notes">${clean(t.notes)}</p>`:""}${visual}</article>`;
+ }).join("")||'<div class="empty-state">Ainda não existem mesas. Usa “+ Nova mesa” para criar a primeira.</div>';
+ const noTable=allSeated().filter(x=>!x.table);
+ unassigned.innerHTML=noTable.length?noTable.map(g=>`<div class="unassigned-row" draggable="true" data-drag="${clean(g.id)}">
+  <button type="button" class="unassigned-person" data-assign-person="${clean(g.id)}"><span class="unassigned-avatar" style="background:${seatColor(g)}">${clean(seatInitials(g.name))}</span><strong>${clean(g.name)}</strong></button>
+  <label class="table-assignment"><select data-assign="${clean(g.id)}" aria-label="Atribuir mesa a ${clean(g.name)}"><option value="">Escolher mesa...</option>${tables.map(t=>`<option value="${clean(t.id)}" ${tableFull(t.id)?"disabled":""}>${clean(t.name)}</option>`).join("")}</select></label>
+ </div>`).join(""):'<p class="empty-state">Todos os confirmados já têm mesa.</p>';
+ document.querySelectorAll("[data-edit-table]").forEach(el=>el.onclick=()=>editTable(el.dataset.editTable));
+ document.querySelectorAll("[data-select-seat]").forEach(el=>el.onclick=()=>{seatSelectedId=seatSelectedId===el.dataset.selectSeat?null:el.dataset.selectSeat;renderSeating()});
+ document.querySelectorAll("[data-assign-person]").forEach(el=>el.onclick=()=>{seatSelectedId=el.dataset.assignPerson;renderSeating()});
+ document.querySelectorAll("[data-place-seat]").forEach(el=>el.onclick=()=>{if(seatSelectedId)assignSeat(seatSelectedId,el.dataset.placeSeat)});
+ document.querySelectorAll("[data-unassign]").forEach(el=>el.onclick=()=>{if(seatSelectedId===el.dataset.unassign)seatSelectedId=null;assignSeat(el.dataset.unassign,null)});
+ document.querySelectorAll("[data-assign]").forEach(el=>el.onchange=()=>assignSeat(el.dataset.assign,el.value));
+ document.querySelectorAll("[data-move]").forEach(el=>el.onchange=()=>assignSeat(el.dataset.move,el.value));
+ document.querySelectorAll("[data-drag]").forEach(el=>el.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",el.dataset.drag);e.dataTransfer.effectAllowed="move"}));
+ document.querySelectorAll("[data-table]").forEach(el=>{
+  el.addEventListener("dragover",e=>{e.preventDefault();el.classList.add("dragover")});
+  el.addEventListener("dragleave",()=>el.classList.remove("dragover"));
+  el.addEventListener("drop",e=>{e.preventDefault();el.classList.remove("dragover");const id=e.dataTransfer.getData("text/plain");if(id)assignSeat(id,el.dataset.table)});
+ });
+}
+function exportCSV(){const rows=[['ID','Nome','Lado','Categoria','Presença','Preferência alimentar','Alergias fictícias','Mesa'],...guests.map(g=>[g.id,g.name,g.side,g.type,labels[g.status],g.diet,g.allergies,g.table||''])];const csv='\uFEFF'+rows.map(cols=>cols.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='convidados-exemplo-hugo-marcia.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);notify('CSV de demonstração exportado.');}
+document.querySelectorAll('.nav-btn').forEach(el=>el.onclick=()=>switchPage(el.dataset.page));document.getElementById('menuBtn').onclick=()=>document.getElementById('sidebar').classList.toggle('open');document.getElementById('closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
+loadDemo();const start=location.hash.slice(1);switchPage(navNames[start]?start:'overview');
+})();
+</script>
+</body>
+</html>
