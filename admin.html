@@ -210,7 +210,7 @@ body{background:#fff;color:#191919}
    <div class="sidebar-bottom"><p>Painel reservado ao Hugo e à Márcia.</p><a class="outline-link" href="./">← Ver o website</a></div>
  </aside>
  <div class="main">
-  <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" aria-label="Abrir menu" id="menuBtn">☰</button><div><strong>Hugo & Márcia</strong><p>Administração do casamento · 21 maio 2027</p></div></div><div class="top-actions"><span class="preview-pill">ÁREA PRIVADA</span><span class="hm-sync-status" id="syncStatus">A ligar…</span><button class="hm-logout" type="button" id="logoutBtn">Sair</button><div class="avatar" aria-label="Área reservada, modelo visual">H | M</div></div></header>
+  <header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="mobile-menu" aria-label="Abrir menu" id="menuBtn">☰</button><div><strong>Hugo & Márcia</strong><p>Administração do casamento · 21 maio 2027</p></div></div><div class="top-actions"><span class="preview-pill">ÁREA PRIVADA</span><span class="hm-sync-status" id="syncStatus">A ligar…</span><button type="button" id="refreshBtn" class="hm-logout" aria-label="Atualizar confirmações">Atualizar</button><button class="hm-logout" type="button" id="logoutBtn">Sair</button><div class="avatar" aria-label="Área reservada, modelo visual">H | M</div></div></header>
   <main class="content" id="view" tabindex="-1"></main>
  </div>
 </div>
@@ -326,11 +326,138 @@ async function importGuestFile(file){
  notify("Lista de 116 convidados importada localmente (103 adultos, 13 crianças).");
 }
 
-function saveDemo(){
- try{
-  localStorage.setItem("hm-admin-demo-v2",JSON.stringify({guests,children,tables}));
- }catch(_){}
+
+const HM_BASE='https://auzhtmontlezxzunnfxw.supabase.co';
+const HM_KEY='sb_publishable_5nivm-pcltRj3wpa52hr3Q_yx9VUIUN';
+let remoteSession=null, liveAdmin=false, syncTimer=null, syncing=false, syncAgain=false;
+let baselineTables=new Map(),baselineGuests=new Map();
+const authScreen=document.getElementById('authScreen');
+const authStatus=document.getElementById('authStatus');
+const adminShell=document.getElementById('adminShell');
+const syncStatus=document.getElementById('syncStatus');
+function hmMessage(s){authStatus.textContent=s}
+async function hmAuthFetch(route,body){
+ const r=await fetch(HM_BASE+'/auth/v1'+route,{method:'POST',headers:{apikey:HM_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.msg||d.error_description||d.message||'Falha na autenticação');return d;
 }
+async function hmRenew(){
+ if(!remoteSession?.refresh_token)throw Error('Sessão expirada');
+ remoteSession=await hmAuthFetch('/token?grant_type=refresh_token',{refresh_token:remoteSession.refresh_token});
+ sessionStorage.setItem('hm-wedding-session',JSON.stringify(remoteSession));
+}
+async function hmApi(path,options={},retry=false){
+ if(!remoteSession?.access_token)throw Error('Inicia sessão');
+ const headers={apikey:HM_KEY,Authorization:'Bearer '+remoteSession.access_token};
+ if(options.body!==undefined)headers['Content-Type']='application/json';
+ const r=await fetch(HM_BASE+'/rest/v1/'+path,{method:options.method||'GET',headers,body:options.body!==undefined?JSON.stringify(options.body):undefined});
+ if(r.status===401&&!retry){await hmRenew();return hmApi(path,options,true)}
+ if(!r.ok){const err=await r.json().catch(()=>({}));throw Error(err.message||err.details||'Erro ao guardar dados')}
+ const raw=await r.text();try{return raw?JSON.parse(raw):null}catch{return null}
+}
+function hmTablePayload(t){return {id:t.id,name:t.name,capacity:t.capacity,shape:t.shape||'Redonda',notes:t.notes||'',sort_order:tables.indexOf(t)+1}}
+function hmGuestPayload(g){
+ const kid=children.includes(g);
+ return {id:g.id,name:g.name,side:g.side,kind:kid?'familia':g.type==='Família'?'familia':'amigos',is_child:kid,status:g.status||'pending',food:kid?'Nenhuma':g.diet||'Nenhuma',allergies:kid?'':g.allergies||'',table_id:g.table||null,confirmed_by:kid?g.adult||null:null};
+}
+function hmCaptureBaseline(){
+ baselineTables=new Map(tables.map(t=>[t.id,JSON.stringify(hmTablePayload(t))]));
+ baselineGuests=new Map(guests.concat(children).map(g=>[g.id,JSON.stringify(hmGuestPayload(g))]));
+}
+async function hmLoadData(initial=false){
+ if(syncing||syncTimer)return;
+ syncStatus.textContent='A atualizar…';
+ const [people,locations]=await Promise.all([
+   hmApi('hm_guests?select=id,name,side,kind,is_child,status,food,allergies,table_id,confirmed_by&order=id.asc'),
+   hmApi('hm_tables?select=id,name,capacity,shape,notes,sort_order&order=sort_order.asc')
+ ]);
+ guests.splice(0,guests.length,...people.filter(g=>!g.is_child).map(g=>({id:g.id,name:g.name,side:g.side,type:g.kind==='familia'?'Família':'Amigos',status:g.status,diet:g.food,allergies:g.allergies,table:g.table_id,email:''})));
+ children.splice(0,children.length,...people.filter(g=>g.is_child).map(g=>({id:g.id,name:g.name,side:g.side,status:g.status,adult:g.confirmed_by,table:g.table_id})));
+ tables.splice(0,tables.length,...locations.map(t=>({id:t.id,name:t.name,capacity:t.capacity,shape:t.shape,notes:t.notes})));
+ hmCaptureBaseline();
+ if(!liveAdmin){liveAdmin=true;authScreen.hidden=true;adminShell.hidden=false}
+ if(initial){const p=location.hash.slice(1);switchPage(navNames[p]?p:'overview')}else render();
+ syncStatus.textContent='Sincronizado';
+}
+async function hmCheckAccess(){
+ if(!remoteSession?.access_token)return;
+ hmMessage('A verificar acesso…');
+ try{
+  const uid=remoteSession.user?.id;
+  if(!uid)throw Error('Sessão sem utilizador');
+  const admins=await hmApi('hm_admins?select=user_id&user_id=eq.'+encodeURIComponent(uid));
+  if(!admins?.length){document.getElementById('claimPanel').hidden=false;hmMessage('Conta autenticada. Introduz o código privado para ativar o acesso.');return}
+  await hmLoadData(true);hmMessage('');
+ }catch(err){hmMessage(err.message||'Não foi possível verificar o acesso.')}
+}
+async function hmSyncOne(){
+ const dt=new Map(tables.map(t=>[t.id,JSON.stringify(hmTablePayload(t))]));
+ const dg=new Map(guests.concat(children).map(g=>[g.id,JSON.stringify(hmGuestPayload(g))]));
+ for(const [id,value] of dt){
+  if(value===baselineTables.get(id))continue;
+  const p=JSON.parse(value),exists=baselineTables.has(id);
+  await hmApi('hm_tables'+(exists?'?id=eq.'+encodeURIComponent(id):''),{method:exists?'PATCH':'POST',body:exists?Object.fromEntries(Object.entries(p).filter(([k])=>k!=='id')):p});
+  baselineTables.set(id,value);
+ }
+ for(const [id,value] of dg){
+  if(value===baselineGuests.get(id))continue;
+  const p=JSON.parse(value),exists=baselineGuests.has(id);
+  await hmApi('hm_guests'+(exists?'?id=eq.'+encodeURIComponent(id):''),{method:exists?'PATCH':'POST',body:exists?Object.fromEntries(Object.entries(p).filter(([k])=>k!=='id')):p});
+  baselineGuests.set(id,value);
+ }
+ for(const id of [...baselineGuests.keys()]){if(dg.has(id))continue;await hmApi('hm_guests?id=eq.'+encodeURIComponent(id),{method:'DELETE'});baselineGuests.delete(id)}
+ for(const id of [...baselineTables.keys()]){if(dt.has(id))continue;await hmApi('hm_tables?id=eq.'+encodeURIComponent(id),{method:'DELETE'});baselineTables.delete(id)}
+}
+async function hmSync(){
+ if(!liveAdmin)return;
+ if(syncing){syncAgain=true;return}
+ syncing=true;syncStatus.textContent='A guardar…';
+ try{do{syncAgain=false;await hmSyncOne()}while(syncAgain);syncStatus.textContent='Guardado ✓'}
+ catch(err){syncStatus.textContent='Erro ao guardar';notify('Não foi possível guardar no servidor: '+err.message)}
+ finally{syncing=false}
+}
+function hmQueueSync(){
+ if(!liveAdmin)return;
+ clearTimeout(syncTimer);syncStatus.textContent='Alterações por guardar…';
+ syncTimer=setTimeout(()=>{syncTimer=null;hmSync()},450);
+}
+function hmInitLogin(){
+ const form=document.getElementById('authForm');
+ form.onsubmit=async e=>{
+  e.preventDefault();hmMessage('A iniciar sessão…');
+  const email=document.getElementById('hmEmail').value.trim(),password=document.getElementById('hmPassword').value;
+  try{remoteSession=await hmAuthFetch('/token?grant_type=password',{email,password});sessionStorage.setItem('hm-wedding-session',JSON.stringify(remoteSession));await hmCheckAccess()}
+  catch(err){hmMessage('Não foi possível entrar. Confirma o email, a palavra-passe e se já verificaste o email de registo.')}
+ };
+ document.getElementById('createAccount').onclick=async()=>{
+  const email=document.getElementById('hmEmail').value.trim(),password=document.getElementById('hmPassword').value;
+  if(!email||password.length<8){hmMessage('Indica o teu email e uma palavra-passe com pelo menos 8 caracteres.');return}
+  hmMessage('A criar conta…');
+  try{
+   const data=await hmAuthFetch('/signup',{email,password});
+   if(data.access_token){remoteSession=data;sessionStorage.setItem('hm-wedding-session',JSON.stringify(data));await hmCheckAccess()}
+   else hmMessage('Conta criada. Verifica o email de confirmação recebido e depois inicia sessão.');
+  }catch(err){hmMessage('Não foi possível criar a conta. Verifica os dados ou inicia sessão.')}
+ };
+ document.getElementById('claimForm').onsubmit=async e=>{
+  e.preventDefault();hmMessage('A ativar acesso…');
+  const code=document.getElementById('claimCode').value.trim();
+  try{
+   const ok=await hmApi('rpc/hm_claim_admin',{method:'POST',body:{p_code:code}});
+   if(ok!==true)throw Error('Não autorizado');
+   document.getElementById('claimPanel').hidden=true;await hmLoadData(true);hmMessage('');
+  }catch(err){hmMessage('Código inválido ou limite de duas contas atingido.')}
+ };
+ document.getElementById('logoutBtn').onclick=async()=>{
+  try{await fetch(HM_BASE+'/auth/v1/logout',{method:'POST',headers:{apikey:HM_KEY,Authorization:'Bearer '+remoteSession.access_token}})}catch{}
+  sessionStorage.removeItem('hm-wedding-session');remoteSession=null;liveAdmin=false;
+  adminShell.hidden=true;authScreen.hidden=false;document.getElementById('hmPassword').value='';
+  hmMessage('Sessão terminada.');
+ };
+ document.getElementById('refreshBtn')?.addEventListener('click',()=>{if(!syncing&&!syncTimer)hmLoadData(false).catch(e=>notify('Não foi possível atualizar: '+e.message))});
+ try{const cached=sessionStorage.getItem('hm-wedding-session');if(cached){remoteSession=JSON.parse(cached);hmCheckAccess()}}catch{}
+}
+
+function saveDemo(){hmQueueSync()}
 function loadDemo(){
  try{
   const saved=JSON.parse(localStorage.getItem("hm-admin-demo-v2")||"null");
@@ -477,7 +604,7 @@ function renderSeating(){
 }
 function exportCSV(){const rows=[['ID','Nome','Lado','Categoria','Presença','Preferência alimentar','Alergias fictícias','Mesa'],...guests.map(g=>[g.id,g.name,g.side,g.type,labels[g.status],g.diet,g.allergies,g.table||''])];const csv='\uFEFF'+rows.map(cols=>cols.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='convidados-exemplo-hugo-marcia.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);notify('CSV de demonstração exportado.');}
 document.querySelectorAll('.nav-btn').forEach(el=>el.onclick=()=>switchPage(el.dataset.page));document.getElementById('menuBtn').onclick=()=>document.getElementById('sidebar').classList.toggle('open');document.getElementById('closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeModal()});
-loadDemo();const start=location.hash.slice(1);switchPage(navNames[start]?start:'overview');
+hmInitLogin();
 })();
 </script>
 </body>
