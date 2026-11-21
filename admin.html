@@ -557,9 +557,9 @@ function seatInitials(name){
  return (parts.length>1?parts[0][0]+parts[parts.length-1][0]:(parts[0]||"?").slice(0,2)).toLocaleUpperCase("pt-PT");
 }
 function seatColor(person){
- // Hugo em sálvia, Márcia em bordô e crianças em taupe suave.
+ // Bordô para o lado do Hugo, verde-sálvia para o lado da Márcia e taupe para crianças.
  if(children.some(child=>child.id===person.id))return "#A09284";
- return person.side==="Hugo"?"#60764F":person.side==="Márcia"?"#783348":"#60764F";
+ return person.side==="Hugo"?"#783348":person.side==="Márcia"?"#60764F":"#783348";
 }
 function renderSeating(){
  const grid=document.getElementById("tableGrid"),unassigned=document.getElementById("unassignedList"),status=document.getElementById("seatSelection");
