@@ -466,6 +466,13 @@ function hmInitLogin(){
   hmMessage('Sessão terminada.');
  };
  document.getElementById('refreshBtn')?.addEventListener('click',()=>{if(!syncing&&!syncTimer)hmLoadData(false).catch(e=>notify('Não foi possível atualizar: '+e.message))});
+ // Atualiza novas confirmações e alterações quando o painel não está a ser editado.
+ setInterval(()=>{
+  if(!liveAdmin||syncing||syncTimer||!modal.hidden||document.hidden)return;
+  const focused=document.activeElement;
+  if(focused&&['INPUT','SELECT','TEXTAREA'].includes(focused.tagName))return;
+  hmLoadData(false).catch(()=>{syncStatus.textContent='Ligação interrompida'});
+ },30000);
  try{const cached=sessionStorage.getItem('hm-wedding-session');if(cached){remoteSession=JSON.parse(cached);hmCheckAccess()}}catch{}
 }
 
