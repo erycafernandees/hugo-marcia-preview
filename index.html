@@ -170,6 +170,60 @@ h1,h2,h3,h4,h5,h6,
   font-family:'DM Sans',Arial,sans-serif!important;
   font-weight:400!important;
 }
+
+/* Identidade visual Hugo & Márcia | branco e preto, sálvia e bordô */
+:root{--white:#fff;--black:#191919;--gray:#676767;--line:#e6e6e3;--sage:#60764f;--sage-dark:#465b3d;--wine:#783348;--wine-dark:#5d2638;--wine-soft:#f8f3f4}
+body{background:#fff;color:#191919}
+.site-header{background:#fff;border-bottom:1px solid #e8e8e5}
+.site-header:after{content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:58px;height:2px;background:var(--wine);opacity:.9}
+.header-shell{min-height:80px}
+.brand{color:#191919}
+.brand span{color:var(--wine)}
+.site-links a{font-weight:500;color:#262626}
+.site-links a:hover,.site-links a.active{color:var(--wine);border-bottom-color:var(--wine)}
+.hero{background:#fff}
+.hero-photo{background:#fff}
+.hero-content{color:var(--black)}
+.hero-date{font-weight:500;color:#262626}
+.hero-date span{background:var(--wine)}
+.countdown>div+div:before{background:#dadeda}
+.countdown strong{color:var(--black)}
+.countdown span{color:#656565}
+.header-rsvp,.main-cta,#rsvp-demo button[type=submit],.location-actions .map-primary,.location-actions .waze-link{background:var(--sage);border-color:var(--sage);color:white!important;box-shadow:none}
+.header-rsvp:hover,.main-cta:hover,#rsvp-demo button[type=submit]:hover,.location-actions a:hover{background:var(--sage-dark);border-color:var(--sage-dark)}
+.section-heading h2,.rsvp-card h2,.day-card h3{font-family:'DM Sans',Arial,sans-serif!important;font-weight:400!important;color:#171717}
+.section-heading h2{letter-spacing:.14em}
+.section-heading .ornament{height:1px;background:linear-gradient(90deg,transparent,var(--wine) 24%,var(--wine) 76%,transparent)}
+.section-heading .ornament:after{color:var(--wine);background:#fff}
+.section-heading p{color:#606060}
+.day-cards{gap:20px}
+.day-card{background:#fff;border:1px solid #e4e3df;border-radius:18px;box-shadow:0 10px 38px #16161607;position:relative;overflow:hidden}
+.day-card:before{content:"";position:absolute;top:0;left:26%;right:26%;height:2px;background:var(--wine)}
+.day-card .eyebrow{color:var(--wine);font-weight:600}
+.day-icon{color:var(--sage)}
+.day-card .time{color:#262626;font-weight:500}
+.day-card h3{letter-spacing:.025em}
+.location-actions .map-primary,.location-actions .waze-link{font-weight:500}
+.reception-status{color:#777}
+.rsvp-section{border-top:1px solid #e6e6e5;background:#fff}
+.rsvp-top{color:var(--wine);font-weight:600}
+.rsvp-card h2{letter-spacing:.08em;text-transform:none}
+.rsvp-steps{gap:13px}
+.rsvp-step.current span{border-color:var(--sage);background:var(--sage)}
+.rsvp-step small{letter-spacing:.09em}
+#guest-name,#child-name,#allergy{border-color:#c7c7c5}
+#guest-name:focus,#child-name:focus,#allergy:focus{border-color:var(--wine);box-shadow:0 0 0 3px #78334812}
+.guest-selection,#demo-feedback{color:#5c5c5c}
+.guest-suggestions button:hover{background:#f7f8f4!important}
+.rsvp-radio label:has(input:checked),.food-choice:has(input:checked),.child-toggle:has(input:checked){border-color:#98aa8f;background:#f6f9f4}
+.rsvp-radio input,.food-choice input,.child-toggle input{accent-color:var(--sage)}
+.demo-notice,.children-panel,.diet-questions{background:#fff;border-color:#e5e5e3}
+.footer{background:#fff;border-top:1px solid #e7e7e3;color:#676767;position:relative}
+.footer:before{content:"";position:absolute;width:70px;height:2px;background:var(--wine);left:50%;top:-1px;transform:translateX(-50%)}
+.footer-admin{color:var(--wine);font-weight:500}
+:focus-visible{outline-color:var(--wine)}
+@media(max-width:740px){.header-shell{min-height:69px}.section-heading h2{letter-spacing:.075em}.day-card{border-radius:15px}.hero-date{letter-spacing:.13em}}
+
 </style>
 <link crossorigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect"/><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
